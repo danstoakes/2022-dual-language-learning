@@ -3,11 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') | Dual Language Learning</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -23,9 +21,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                <a class="navbar-brand" href="{{ url('/') }}">Dual Language Learning</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,6 +48,18 @@
                                 </li>
                             @endif
                         @else
+                            @can('user-list')
+                                <li><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
+                            @endcan
+                            @can('role-list')
+                                <li><a class="nav-link" href="{{ route('roles.index') }}">Roles</a></li>
+                            @endcan
+                            @can('permission-list')
+                                <li><a class="nav-link" href="{{ route('permissions.index') }}">Permission</a></li>
+                            @endcan
+                            {{-- @can('post-list')
+                                <li><a class="nav-link" href="{{ route('posts.index') }}">Posts</a></li>
+                            @endcan --}}
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
