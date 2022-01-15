@@ -11305,3 +11305,10 @@ textarea.form-control-lg {
 .language-card:hover {
   background-color: rgba(0, 0, 0, 0.03);
 }
+
+.alert p, .alert ul {
+  margin-bottom: 0;
+}
+.alert-close:hover {
+  cursor: pointer;
+}

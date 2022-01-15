@@ -2,11 +2,7 @@
 @section('content')
 <div class="container">
     <div class="justify-content-center">
-        @if (\Session::has('success'))
-            <div class="alert alert-success">
-                <p>{{ \Session::get('success') }}</p>
-            </div>
-        @endif
+        @include("partials.popup")
         <div class="card">
             <div class="card-header">User
                 @can('role-create')

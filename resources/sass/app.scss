@@ -36,3 +36,13 @@
         background-color: rgba(0, 0, 0, 0.03);
     }
 }
+
+.alert {
+    p, ul {
+        margin-bottom: 0;
+    }
+
+    &-close:hover {
+        cursor: pointer;
+    }
+}

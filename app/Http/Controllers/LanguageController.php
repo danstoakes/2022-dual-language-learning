@@ -27,7 +27,7 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        $data = Language::orderBy('id', 'ASC')->paginate(10);
+        $data = Language::orderBy('id', 'ASC')->paginate(5);
         return view('languages.index', compact('data'));
     }
 
@@ -54,9 +54,7 @@ class LanguageController extends Controller
             'description' => 'required|max:1024'
         ]);
     
-        $input = $request->all();
-    
-        $language = Language::create($input);
+        Language::create($request->all());
     
         return redirect()->route('languages.index')
             ->with('success', 'Language created successfully.');
