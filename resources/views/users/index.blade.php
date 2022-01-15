@@ -8,32 +8,35 @@
             </div>
         @endif
         <div class="card">
-            <div class="card-header">Users
-                <span class="float-right">
-                    <a class="btn btn-primary" href="{{ route('users.create') }}">New User</a>
-                </span>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <p class="m-0">Users</p>
+                @can('user-create')
+                    <span>
+                        <a class="btn btn-primary" href="{{ route('users.create') }}">New User</a>
+                    </span>
+                @endcan
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Roles</th>
+                            <th>Role</th>
                             <th width="280px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $key => $user)
-                            <tr>
+                            <tr class="align-middle">
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
                                     @if(!empty($user->getRoleNames()))
                                         @foreach($user->getRoleNames() as $val)
-                                            <label class="badge badge-dark">{{ $val }}</label>
+                                            {{ ucfirst($val) }}
                                         @endforeach
                                     @endif
                                 </td>

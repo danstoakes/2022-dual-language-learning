@@ -2,10 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Language;
 use Illuminate\Http\Request;
 
 class LanguageController extends Controller
 {
+    /**
+     * Create a new instance of the class
+     *
+     * @return void
+     */
+    function __construct()
+    {
+         $this->middleware('permission:language-list|language-create|language-edit|language-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:language-create', ['only' => ['create','store']]);
+         $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:language-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +27,8 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        //
+        $data = Language::orderBy('id', 'ASC')->paginate(10);
+        return view('languages.index', compact('data'));
     }
 
     /**
@@ -23,7 +38,7 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        //
+        return view('languages.create');
     }
 
     /**
@@ -34,7 +49,17 @@ class LanguageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required|max:1024'
+        ]);
+    
+        $input = $request->all();
+    
+        $language = Language::create($input);
+    
+        return redirect()->route('languages.index')
+            ->with('success', 'Language created successfully.');
     }
 
     /**

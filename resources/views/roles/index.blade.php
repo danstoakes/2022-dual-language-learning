@@ -8,14 +8,15 @@
             </div>
         @endif
         <div class="card">
-            <div class="card-header">Roles
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <p class="m-0">Roles</p>
                 @can('role-create')
-                    <span class="float-right">
+                    <span>
                         <a class="btn btn-primary" href="{{ route('roles.create') }}">New Role</a>
                     </span>
                 @endcan
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
@@ -26,7 +27,7 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $key => $role)
-                            <tr>
+                            <tr class="align-middle">
                                 <td>{{ $role->id }}</td>
                                 <td>{{ $role->name }}</td>
                                 <td>

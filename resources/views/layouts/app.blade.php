@@ -57,9 +57,9 @@
                             @can('permission-list')
                                 <li><a class="nav-link" href="{{ route('permissions.index') }}">Permission</a></li>
                             @endcan
-                            {{-- @can('post-list')
-                                <li><a class="nav-link" href="{{ route('posts.index') }}">Posts</a></li>
-                            @endcan --}}
+                            @can('language-list')
+                                <li><a class="nav-link" href="{{ route('languages.index') }}">Languages</a></li>
+                            @endcan
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

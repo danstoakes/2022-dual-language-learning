@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     /**
-     * create a new instance of the class
+     * Create a new instance of the class
      *
      * @return void
      */
@@ -31,7 +31,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id', 'desc')->paginate(5);
+        $data = User::orderBy('id', 'ASC')->paginate(10);
         return view('users.index', compact('data'));
     }
 

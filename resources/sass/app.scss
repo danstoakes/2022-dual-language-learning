@@ -6,3 +6,33 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.language-cards {
+    a {
+        color: inherit;
+        text-decoration: inherit;
+    }
+}
+
+.language-card {
+    -webkit-transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear;
+
+    h1, h2, h3 {
+        span {
+            font-size: 2rem;
+            padding-left: 0.4em;
+            svg {
+                height: 2rem;
+                vertical-align: -0.17em;
+            }
+        }
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+}

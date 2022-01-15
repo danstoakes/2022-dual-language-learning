@@ -8,14 +8,15 @@
             </div>
         @endif
         <div class="card">
-            <div class="card-header">Permissions
-                @can('role-create')
-                    <span class="float-right">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <p class="m-0">Permissions</p>
+                @can('permission-create')
+                    <span>
                         <a class="btn btn-primary" href="{{ route('permissions.create') }}">New Permission</a>
                     </span>
                 @endcan
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
@@ -26,7 +27,7 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $key => $permission)
-                            <tr>
+                            <tr class="align-middle">
                                 <td>{{ $permission->id }}</td>
                                 <td>{{ $permission->name }}</td>
                                 <td>
