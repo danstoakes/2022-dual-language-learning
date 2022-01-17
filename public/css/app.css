@@ -11294,13 +11294,12 @@ textarea.form-control-lg {
 .language-card {
   transition: background-color 200ms linear;
 }
-.language-card h1 span, .language-card .h1 span, .language-card h2 span, .language-card .h2 span, .language-card h3 span, .language-card .h3 span {
-  font-size: 2rem;
-  padding-left: 0.4em;
-}
-.language-card h1 span svg, .language-card .h1 span svg, .language-card h2 span svg, .language-card .h2 span svg, .language-card h3 span svg, .language-card .h3 span svg {
-  height: 2rem;
-  vertical-align: -0.17em;
+.language-card span {
+  margin-top: -1rem;
+  margin-right: 1rem;
+  right: 0;
+  position: absolute;
+  width: 2.5rem;
 }
 .language-card:hover {
   background-color: rgba(0, 0, 0, 0.03);
@@ -11311,4 +11310,8 @@ textarea.form-control-lg {
 }
 .alert-close:hover {
   cursor: pointer;
+}
+
+.footer {
+  height: 40px;
 }

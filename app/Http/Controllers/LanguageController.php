@@ -27,7 +27,7 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        $data = Language::orderBy('id', 'ASC')->paginate(5);
+        $data = Language::orderBy('id', 'ASC')->paginate(4);
         return view('languages.index', compact('data'));
     }
 

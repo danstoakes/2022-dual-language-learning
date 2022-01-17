@@ -4,12 +4,14 @@
     <div class="justify-content-center">
         @include("partials.popup")
         <div class="card">
-            <div class="card-header">Create Language
-                <span class="float-right">
-                    <a class="btn btn-primary" href="{{ route('languages.index') }}">Languages</a>
-                </span>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <p class="m-0">Create Language</p>
+                @can('language-list')
+                    <span>
+                        <a class="btn btn-primary" href="{{ route('languages.index') }}">Back</a>
+                    </span>
+                @endcan
             </div>
-
             <div class="card-body">
                 {!! Form::open(array('route' => 'languages.store','method'=>'POST')) !!}
                     <div class="form-group">

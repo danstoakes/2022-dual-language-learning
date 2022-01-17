@@ -1,47 +1,49 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div class="justify-content-center">
+    <div class="row justify-content-center">
         @include("partials.popup")
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <p class="m-0">Roles</p>
-                @can('role-create')
-                    <span>
-                        <a class="btn btn-primary" href="{{ route('roles.create') }}">New Role</a>
-                    </span>
-                @endcan
-            </div>
-            <div class="card-body table-responsive">
-                <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th width="280px">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $key => $role)
-                            <tr class="align-middle">
-                                <td>{{ $role->id }}</td>
-                                <td>{{ $role->name }}</td>
-                                <td>
-                                    <a class="btn btn-success" href="{{ route('roles.show',$role->id) }}">Show</a>
-                                    @can('role-edit')
-                                        <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
-                                    @endcan
-                                    @can('role-delete')
-                                        {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                        {!! Form::close() !!}
-                                    @endcan
-                                </td>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <p class="m-0">Roles</p>
+                    @can('role-create')
+                        <span>
+                            <a class="btn btn-primary" href="{{ route('roles.create') }}">New Role</a>
+                        </span>
+                    @endcan
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th width="280px">Action</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{ $data->render() }}
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $key => $role)
+                                <tr class="align-middle">
+                                    <td>{{ $role->id }}</td>
+                                    <td>{{ $role->name }}</td>
+                                    <td>
+                                        <a class="btn btn-success" href="{{ route('roles.show',$role->id) }}">Show</a>
+                                        @can('role-edit')
+                                            <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                                        @endcan
+                                        @can('role-delete')
+                                            {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                            {!! Form::close() !!}
+                                        @endcan
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {{ $data->render() }}
+                </div>
             </div>
         </div>
     </div>

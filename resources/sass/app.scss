@@ -21,15 +21,12 @@
     -ms-transition: background-color 200ms linear;
     transition: background-color 200ms linear;
 
-    h1, h2, h3 {
-        span {
-            font-size: 2rem;
-            padding-left: 0.4em;
-            svg {
-                height: 2rem;
-                vertical-align: -0.17em;
-            }
-        }
+    span {
+        margin-top: -1rem;
+        margin-right: 1rem;
+        right: 0;
+        position: absolute;
+        width: 2.5rem;
     }
 
     &:hover {
@@ -45,4 +42,8 @@
     &-close:hover {
         cursor: pointer;
     }
+}
+
+.footer {
+    height: 40px;
 }
