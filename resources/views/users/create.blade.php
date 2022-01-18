@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create User')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -31,9 +32,9 @@
                             <strong>Confirm Password:</strong>
                             {!! Form::password('password_confirmation', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <strong>Role:</strong>
-                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control form-select form-select-sm')) !!}
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     {!! Form::close() !!}

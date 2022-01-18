@@ -31,7 +31,10 @@ class PermissionSeeder extends Seeder
             'post-create',
             'post-edit',
             'post-delete',
-
+            'language-list',
+            'language-create',
+            'language-edit',
+            'language-delete'
         ];
 
         foreach ($data as $permission) {

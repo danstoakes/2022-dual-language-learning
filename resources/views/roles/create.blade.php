@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create Role')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -19,7 +20,7 @@
                             <strong>Name:</strong>
                             {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <strong>Permission:</strong>
                             <br/>
                             @foreach($permission as $value)

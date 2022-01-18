@@ -81,7 +81,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="pt-4 pb-6">
             @yield('content')
         </main>
         <footer class="navbar footer fixed-bottom bg-white shadow">

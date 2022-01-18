@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', $role->name)
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -7,9 +8,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Role</p>
-                    @can('role-list')
+                    @can('role-edit')
                         <span>
-                            <a class="btn btn-primary" href="{{ route('roles.index') }}">Back</a>
+                            <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
                         </span>
                     @endcan
                 </div>

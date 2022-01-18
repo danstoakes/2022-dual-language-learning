@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create Language')
 @section('content')
 <div class="container">
     <div class="justify-content-center">
@@ -13,25 +14,26 @@
                 @endcan
             </div>
             <div class="card-body">
-                {!! Form::open(array('route' => 'languages.store','method'=>'POST')) !!}
-                    <div class="form-group">
-                        <strong>Name:</strong>
-                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                <form method="POST" action="{{ route('languages.store') }}">
+                    @csrf
+                    <div class="form-group mb-2">
+                        <label for="name">Name</label>
+                        <input class="form-control" type="text" name="name" required />
                     </div>
-                    <div class="form-group">
-                        <strong>Description:</strong>
-                        {!! Form::text('description', null, array('placeholder' => 'Description','class' => 'form-control')) !!}
+                    <div class="form-group mb-2">
+                        <label for="excerpt">Excerpt</label>
+                        <input class="form-control" type="text" name="excerpt" required />
                     </div>
-                    <div class="form-group">
-                        <strong>Module count:</strong>
-                        {!! Form::text('module_count', null, array('placeholder' => 'Module count','class' => 'form-control')) !!}
+                    <div class="form-group mb-2">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" rows="4" required></textarea>
                     </div>
-                    <div class="form-group">
-                        <strong>Logo path:</strong>
-                        {!! Form::text('logo_path', null, array('placeholder' => 'Logo path','class' => 'form-control')) !!}
+                    <div class="form-group mb-3">
+                        <label for="logo">SVG Logo</label>
+                        <textarea class="form-control" name="logo" rows="4" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>

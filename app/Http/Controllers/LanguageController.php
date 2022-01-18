@@ -68,7 +68,8 @@ class LanguageController extends Controller
      */
     public function show($id)
     {
-        //
+        $language = Language::find($id);
+        return view('languages.show', compact('language'));
     }
 
     /**
@@ -79,7 +80,8 @@ class LanguageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $language = Language::find($id);
+        return view('languages.edit', compact('language'));
     }
 
     /**
@@ -91,7 +93,22 @@ class LanguageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'excerpt' => 'max:254',
+            'description' => 'max:1024',
+            'logo' => 'required'
+        ]);
+
+        $language = Language::find($id);
+        $language->name = $request->input('name');
+        $language->excerpt = $request->input('excerpt');
+        $language->description = $request->input('description');
+        $language->logo_path = $request->input('logo');
+        $language->save();
+        
+        return redirect()->route('languages.show', $language->id)
+            ->with('success', 'Language updated successfully.');
     }
 
     /**

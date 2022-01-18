@@ -20,7 +20,7 @@ class CreateLanguageTable extends Migration
                 $table->id();
                 $table->text("name");
                 $table->string('description', 1024);
-                $table->integer("module_count");
+                $table->integer("module_count")->default(0);
                 $table->text("logo_path");
                 $table->timestamps();
             });

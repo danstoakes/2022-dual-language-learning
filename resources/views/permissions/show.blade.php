@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', $permission->name)
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -9,7 +10,9 @@
                     <p class="m-0">Permission</p>
                     @can('permission-list')
                         <span>
-                            <a class="btn btn-primary" href="{{ route('permissions.index') }}">Back</a>
+                            @can('permission-edit')
+                                <a class="btn btn-primary" href="{{ route('permissions.edit', $permission->id) }}">Edit</a>
+                            @endcan
                         </span>
                     @endcan
                 </div>

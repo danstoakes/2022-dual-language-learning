@@ -45,7 +45,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ __("Permission Centre") }}</h5>
-                                <p class="card-text">{{ __("Manage existing site-wide permissions or create new ones.") }}</p>
+                                <p class="card-text">{{ __("Manage existing permissions or create new ones.") }}</p>
                                 <a href="{{ route('permissions.index') }}" class="btn btn-primary">{{ __("View") }}</a>
                             </div>
                         </div>

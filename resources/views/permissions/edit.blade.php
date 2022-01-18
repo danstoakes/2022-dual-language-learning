@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Edit Permission')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -15,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     {!! Form::model($permission, ['route' => ['permissions.update', $permission->id], 'method'=>'PATCH']) !!}
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <strong>Name:</strong>
                             {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                         </div>

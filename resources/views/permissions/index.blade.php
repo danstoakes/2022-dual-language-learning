@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Permission Centre')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -17,9 +18,9 @@
                     <table class="table table-hover">
                         <thead class="thead-dark">
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th width="280px">Action</th>
+                                <th width="10%">#</th>
+                                <th width="70%">Name</th>
+                                <th width="20%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,13 +29,10 @@
                                     <td>{{ $permission->id }}</td>
                                     <td>{{ $permission->name }}</td>
                                     <td>
-                                        <a class="btn btn-success" href="{{ route('permissions.show',$permission->id) }}">Show</a>
-                                        @can('role-edit')
-                                            <a class="btn btn-primary" href="{{ route('permissions.edit',$permission->id) }}">Edit</a>
-                                        @endcan
+                                        <a class="btn btn-primary" href="{{ route('permissions.show', $permission->id) }}">Show</a>
                                         @can('role-delete')
                                             {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id],'style'=>'display:inline']) !!}
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                            {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
                                             {!! Form::close() !!}
                                         @endcan
                                     </td>

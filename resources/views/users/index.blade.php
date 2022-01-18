@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'New User')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -17,11 +18,11 @@
                     <table class="table table-hover">
                         <thead class="thead-dark">
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th width="280px">Action</th>
+                                <th width="10%">#</th>
+                                <th width="15%">Name</th>
+                                <th width="32%">Email</th>
+                                <th width="13%">Role</th>
+                                <th width="20%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,13 +39,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="btn btn-success" href="{{ route('users.show',$user->id) }}">Show</a>
-                                        @can('user-edit')
-                                            <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-                                        @endcan
+                                        <a class="btn btn-primary" href="{{ route('users.show', $user->id) }}">Show</a>
                                         @can('user-delete')
                                             {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                            {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
                                             {!! Form::close() !!}
                                         @endcan
                                     </td>
