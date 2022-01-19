@@ -38,10 +38,10 @@
                                             @endforeach
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="d-flex">
                                         <a class="btn btn-primary" href="{{ route('users.show', $user->id) }}">Show</a>
                                         @can('user-delete')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id], 'class' => 'ms-2']) !!}
                                             {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
                                             {!! Form::close() !!}
                                         @endcan

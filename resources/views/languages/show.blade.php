@@ -15,14 +15,14 @@
                     @endcan
                 </div>
                 <div class="card-body">
-                    <div class="d-flex">
-                        <div>
-                            {!! $language->logo_path !!}
-                        </div>
+                    <div class="d-flex flex-column">
                         <div>
                             <h5 class="card-title">{{ $language->name }}</h5>
                             <p class="card-text">{{ $language->description }}</p>
                         </div>
+                        <!-- <div>
+                            {!! $language->logo_path !!}
+                        </div> -->
                     </div>
                 </div>
             </div>

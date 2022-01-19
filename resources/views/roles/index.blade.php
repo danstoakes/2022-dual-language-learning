@@ -28,10 +28,10 @@
                                 <tr class="align-middle">
                                     <td>{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
-                                    <td>
+                                    <td class="d-flex">
                                         <a class="btn btn-primary" href="{{ route('roles.show',$role->id) }}">Show</a>
                                         @can('role-delete')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                                            {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id], 'class' => 'ms-2']) !!}
                                             {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
                                             {!! Form::close() !!}
                                         @endcan
