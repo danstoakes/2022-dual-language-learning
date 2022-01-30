@@ -23,7 +23,7 @@
                         <strong>Permissions:</strong>
                         @if(!empty($rolePermissions))
                             @foreach($rolePermissions as $permission)
-                                <label class="badge badge-success">{{ $permission->name }}</label>
+                                <label class="badge badge-success btn-primary">{{ $permission->name }}</label>
                             @endforeach
                         @endif
                     </div>

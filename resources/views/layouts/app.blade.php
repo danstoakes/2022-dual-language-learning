@@ -65,12 +65,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <small class="dropdown-item form-text text-muted">Manage Account</small>
-                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                    {{-- <a class="dropdown-item" href="{{ route('profile') }}">
                                         {{ __('Profile') }}
-                                    </a>
-                                    <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                    </a> --}}
+                                    <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

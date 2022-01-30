@@ -13,9 +13,6 @@ class AddExcerptToLanguages extends Migration
      */
     public function up()
     {
-        Schema::table('languages', function (Blueprint $table) {
-            //
-        });
         if (Schema::hasTable('languages')) {
             Schema::table('languages', function (Blueprint $table) {
                 $table->string('excerpt', 255)->after('name')->nullable();
