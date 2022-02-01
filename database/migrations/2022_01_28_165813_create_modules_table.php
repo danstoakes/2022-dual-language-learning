@@ -17,6 +17,7 @@ class CreateModulesTable extends Migration
         {
             Schema::create('modules', function (Blueprint $table) {
                 $table->id();
+                $table->unsignedBigInteger('language_id');
                 $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
                 $table->text('name');
                 $table->string('description', 2048);
