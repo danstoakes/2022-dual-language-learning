@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Language;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
-class LanguageController extends Controller
+class ModuleController extends Controller
 {
     /**
      * Create a new instance of the class
@@ -15,20 +15,9 @@ class LanguageController extends Controller
     function __construct()
     {
          $this->middleware('permission:language-list|language-create|language-edit|language-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:language-create', ['only' => ['create','store']]);
-         $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:language-create', ['only' => ['create', 'store']]);
+         $this->middleware('permission:language-edit', ['only' => ['edit', 'update']]);
          $this->middleware('permission:language-delete', ['only' => ['destroy']]);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $data = Language::orderBy('id', 'ASC')->paginate(4);
-        return view('languages.index', compact('data'));
     }
 
     /**
@@ -36,9 +25,9 @@ class LanguageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($languageId)
     {
-        return view('languages.create');
+        return view('modules.create', ['languageId' => $languageId]);
     }
 
     /**
@@ -54,10 +43,13 @@ class LanguageController extends Controller
             'description' => 'required|max:1024'
         ]);
     
-        Language::create($request->all());
-    
-        return redirect()->route('languages.index')
-            ->with('success', 'Language created successfully.');
+        $module = Module::create($request->all());
+
+        if ($module != null)
+            return redirect()->route('languages.show', $request->language_id)
+                ->with('success', 'Module created successfully.');
+
+        return redirect()->back()->with('error', 'There was a problem creating the module.');
     }
 
     /**
@@ -68,10 +60,10 @@ class LanguageController extends Controller
      */
     public function show($id)
     {
-        $language = Language::find($id);
-        $modules = $language->modules->toArray();
- 
-        return view('languages.show', compact('language'), compact('modules'));
+        $module = Module::find($id);
+        $phrases = $module->phrases()->paginate(10);
+
+        return view('modules.show', compact('module'), compact('phrases'));
     }
 
     /**
@@ -82,8 +74,8 @@ class LanguageController extends Controller
      */
     public function edit($id)
     {
-        $language = Language::find($id);
-        return view('languages.edit', compact('language'));
+        $module = Module::find($id);
+        return view('modules.edit', compact('module'));
     }
 
     /**
@@ -97,20 +89,18 @@ class LanguageController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'excerpt' => 'max:254',
             'description' => 'max:1024',
             'logo' => 'required'
         ]);
 
-        $language = Language::find($id);
-        $language->name = $request->input('name');
-        $language->excerpt = $request->input('excerpt');
-        $language->description = $request->input('description');
-        $language->icon_svg = $request->input('logo');
-        $language->save();
+        $module = Module::find($id);
+        $module->name = $request->input('name');
+        $module->description = $request->input('description');
+        $module->icon_svg = $request->input('logo');
+        $module->save();
         
-        return redirect()->route('languages.show', $language->id)
-            ->with('success', 'Language updated successfully.');
+        return redirect()->route('modules.show', $module->id)
+            ->with('success', 'Module updated successfully.');
     }
 
     /**

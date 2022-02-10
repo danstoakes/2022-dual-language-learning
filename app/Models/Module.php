@@ -13,4 +13,23 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
     use HasFactory;
+
+    protected $table = "modules";
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        "language_id",
+        "name",
+        "description",
+        "icon_svg"
+    ];
+
+    public function phrases ()
+    {
+        return $this->belongsToMany(Phrase::class, 'module_phrase');
+    }
 }

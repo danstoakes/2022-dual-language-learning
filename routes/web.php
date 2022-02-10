@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PhraseController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -29,10 +31,13 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/test', [TestController::class, 'index'])->name('test');
 Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
+Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('languages', LanguageController::class);
+    Route::resource('modules', ModuleController::class)->except(['create']);
+    Route::resource('phrases', PhraseController::class);
 });

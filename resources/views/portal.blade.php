@@ -5,19 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="row mb-4">
-                @can('user-list')
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ __("User Hub") }}</h5>
-                                <p class="card-text">{{ __("Create new users or manage existing ones.") }}</p>
-                                <a href="{{ route('users.index') }}" class="btn btn-primary">{{ __("View") }}</a>
-                            </div>
-                        </div>
-                    </div>
-                @endcan
                 @can('language-list')
-                    <div class="col-sm-6">
+                    <div class="">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ __("Language Hub") }}</h5>
@@ -28,7 +17,18 @@
                     </div>
                 @endcan
             </div>
-            <div class="row">
+            <div class="row mb-4">
+                @can('user-list')
+                    <div class="col-sm-6 mb-4 mb-sm-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ __("User Hub") }}</h5>
+                                <p class="card-text">{{ __("Create new users or manage existing ones.") }}</p>
+                                <a href="{{ route('users.index') }}" class="btn btn-primary">{{ __("View") }}</a>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
                 @can('role-list')
                     <div class="col-sm-6">
                         <div class="card">
@@ -40,13 +40,26 @@
                         </div>
                     </div>
                 @endcan
+            </div>
+            <div class="row mb-4">
                 @can('permission-list')
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 mb-4 mb-sm-0">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ __("Permission Centre") }}</h5>
-                                <p class="card-text">{{ __("Manage existing permissions or create new ones.") }}</p>
+                                <p class="card-text">{{ __("Manage permissions or create new ones.") }}</p>
                                 <a href="{{ route('permissions.index') }}" class="btn btn-primary">{{ __("View") }}</a>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+                @can('language-list')
+                    <div class="col-sm-6 mb-4 mb-sm-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ __("Phrase Hub") }}</h5>
+                                <p class="card-text">{{ __("Add, manage or delete existing phrases.") }}</p>
+                                <a href="{{ route('phrases.index') }}" class="btn btn-primary">{{ __("View") }}</a>
                             </div>
                         </div>
                     </div>

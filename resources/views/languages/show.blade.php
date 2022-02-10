@@ -17,12 +17,22 @@
                 <div class="card-body">
                     <div class="d-flex flex-column">
                         <div>
-                            <h5 class="card-title">{{ $language->name }}</h5>
+                            <h4 class="card-title">{{ $language->name }}</h4>
                             <p class="card-text">{{ $language->description }}</p>
                         </div>
                         <!-- <div>
                             {!! $language->logo_path !!}
                         </div> -->
+                        <div class="mt-3">
+                            <h5 class="card-title">Modules ({{ count($modules) }})</h5>
+
+                            @foreach ($modules as $module)
+                                <a href="{{ route('modules.show', $module['id']) }}">{{ $module["name"] }}</a>                            
+                            @endforeach
+                        </div>
+                        <div class="mt-3">
+                            <a class="btn btn-primary" href="{{ route('modules.create', $language->id) }}">Create Module</a>
+                        </div>
                     </div>
                 </div>
             </div>

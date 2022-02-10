@@ -1,8 +1,10 @@
 window.addEventListener("DOMContentLoaded", function () {
-    console.log('DOM fully loaded and parsed');
+    let closeButton = document.getElementById("alert_popup_close");
 
-    document.getElementById("alert_popup_close").addEventListener("click", function (e) {
-        e.target.parentNode.classList.remove("d-flex");
-        e.target.parentNode.classList.add("d-none");
-    });
+    if (closeButton) {
+        closeButton.addEventListener("click", function (e) {
+            e.target.parentNode.classList.remove("d-flex");
+            e.target.parentNode.classList.add("d-none");
+        });
+    }
 });

@@ -14,4 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 class Phrase extends Model
 {
     use HasFactory;
+
+    public function modules ()
+    {
+        return $this->belongsToMany(Module::class, 'module_phrase');
+    }
 }
