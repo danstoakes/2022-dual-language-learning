@@ -41,7 +41,7 @@
                     </div>
                 @endcan
             </div>
-            <div class="row mb-4">
+            <div class="row">
                 @can('permission-list')
                     <div class="col-sm-6 mb-4 mb-sm-0">
                         <div class="card">
@@ -54,7 +54,7 @@
                     </div>
                 @endcan
                 @can('language-list')
-                    <div class="col-sm-6 mb-4 mb-sm-0">
+                    <div class="col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ __("Phrase Hub") }}</h5>

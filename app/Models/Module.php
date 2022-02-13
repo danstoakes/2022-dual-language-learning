@@ -32,4 +32,14 @@ class Module extends Model
     {
         return $this->belongsToMany(Phrase::class, 'module_phrase');
     }
+
+    public function hasBatch ($batchId)
+    {
+        $phrases = $this->phrases->where("batch_id", $batchId);
+
+        if (isset($phrases) && count($phrases) > 0)
+            return true;
+        
+        return false;
+    }
 }

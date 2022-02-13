@@ -17,6 +17,8 @@ class CreatePhrasesTable extends Migration
         {
             Schema::create('phrases', function (Blueprint $table) {
                 $table->id();
+                $table->unsignedBigInteger('language_id');
+                $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
                 $table->text('batch_id'); // i.e, if the phrase exists for three languages, all should have the same batch id to refer to each other
                 $table->text('phrase');
                 $table->timestamps();

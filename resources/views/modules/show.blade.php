@@ -17,24 +17,22 @@
                 <div class="card-body table-responsive">
                     <div class="mb-2">
                         <span>
-                            <a class="btn btn-primary" href="{{ route('phrases.create') }}">Add Phrase</a>
+                            <a class="btn btn-primary" href="{{ route('modules.addPhrase', $module) }}">Add Phrase</a>
                         </span>
                     </div>
                     <table class="table table-hover">
                         <thead class="thead-dark">
                             <tr>
-                                <th width="10%">#</th>
-                                <th width="70%">Name</th>
+                                <th width="80%">Phrase</th>
                                 <th width="20%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($phrases as $key => $phrase)
                                 <tr class="align-middle">
-                                    <td>{{ $phrase->id }}</td>
-                                    <td>{{ $phrase->name }}</td>
+                                    <td>{{ $phrase->phrase }}</td>
                                     <td class="d-flex">
-                                        <a class="btn btn-primary" href="{{ route('phrases.show', $$phrase->id) }}">Show</a>
+                                        <a class="btn btn-primary" href="{{ route('phrases.show', $phrase->id) }}">Show</a>
                                         @can('language-delete')
                                             {!! Form::open(['method' => 'DELETE','route' => ['phrases.destroy', $phrase->id], 'class' => 'ms-2']) !!}
                                             {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}

@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="logo">SVG Logo</label>
-                            <textarea class="form-control" name="logo" rows="4" required>{{ $language->logo_path }}</textarea>
+                            <textarea class="form-control" name="logo_path" rows="4" required>{{ $language->logo_path }}</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

@@ -28,13 +28,15 @@
                                 <tr class="align-middle">
                                     <td>{{ $permission->id }}</td>
                                     <td>{{ $permission->name }}</td>
-                                    <td class="d-flex">
-                                        <a class="btn btn-primary" href="{{ route('permissions.show', $permission->id) }}">Show</a>
-                                        @can('role-delete')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id], 'class' => 'ms-2']) !!}
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
-                                            {!! Form::close() !!}
-                                        @endcan
+                                    <td>
+                                        <div class="d-flex">
+                                            <a class="btn btn-primary" href="{{ route('permissions.show', $permission->id) }}">Show</a>
+                                            @can('role-delete')
+                                                {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id], 'class' => 'ms-2']) !!}
+                                                {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
+                                                {!! Form::close() !!}
+                                            @endcan
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

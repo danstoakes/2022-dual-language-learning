@@ -18,7 +18,7 @@
                     <div class="col-md-12 {{ $data->appends($_GET)->hasPages() ? 'mb-3' : '' }}">
                         <div class="row">
                             @foreach($data as $key => $language)
-                                <div class="col-sm-3 {{ $loop->index % 3 == 0 && $loop->count - ($loop->index + 1) > 3 ? 'mb-4' : '' }}">
+                                <div class="col-sm-6 col-md-4 {{ $loop->index % 3 == 0 && $loop->count - ($loop->index + 1) > 3 ? 'mb-4' : '' }}">
                                     <div class="card">
                                         <span class="card-img-top rounded">{!! $language->logo_path !!}</span>
                                         <div class="card-body">

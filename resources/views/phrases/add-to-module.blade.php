@@ -1,0 +1,56 @@
+@extends('layouts.app')
+@section('title', 'Add to Module')
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        @include("partials.popup")
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <p class="m-0">Phrases</p>
+                    @can('language-create')
+                        <span>
+                            <a class="btn btn-primary" href="{{ route('phrases.create') }}">New Phrase</a>
+                        </span>
+                    @endcan
+                </div>
+                @if (isset($data) && count($data) > 0)
+                    <div class="card-body table-responsive">
+                        <form>
+                            @csrf
+                            @method("PUT")
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th width="10%"></th>
+                                        <th width="80%">Phrase</th>
+                                        <th width="10%">Batch No.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $batch)
+                                        <tr class="align-middle">
+                                            <td>
+                                                <input {{ \App\Models\Module::find($module)->hasBatch($batch->batch_id) ? "checked" : "" }} class="btn-submit" type="checkbox" name="batch_id[]" value="{{ $batch->batch_id }}" />
+                                            </td>
+                                            <td class="batch-phrase-list">{!! $batch->phrase !!}</td>
+                                            <td class="text-black-50">{{ $batch->batch_id }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                @else
+                    <div class="card-body">
+                        <div>
+                            <h4 class="card-title">No Phrases Available</h4>
+                            <p class="card-text">Oops! It looks like there aren't any phrases yet.</p>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

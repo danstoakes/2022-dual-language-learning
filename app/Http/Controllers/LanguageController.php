@@ -99,14 +99,14 @@ class LanguageController extends Controller
             'name' => 'required',
             'excerpt' => 'max:254',
             'description' => 'max:1024',
-            'logo' => 'required'
+            'logo_path' => 'required'
         ]);
 
         $language = Language::find($id);
         $language->name = $request->input('name');
         $language->excerpt = $request->input('excerpt');
         $language->description = $request->input('description');
-        $language->icon_svg = $request->input('logo');
+        $language->logo_path = $request->input('logo_path');
         $language->save();
         
         return redirect()->route('languages.show', $language->id)

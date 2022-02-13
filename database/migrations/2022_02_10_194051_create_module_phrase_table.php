@@ -13,11 +13,6 @@ class CreateModulePhraseTable extends Migration
      */
     public function up()
     {
-        Schema::create('module_phrase', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-
         if (!Schema::hasTable('module_phrase')) {
             Schema::create('module_phrase', function (Blueprint $table) {
                 $table->unsignedBigInteger('module_id');

@@ -20,6 +20,7 @@ class Language extends Model
     protected $fillable = [
         "name",
         "description",
+        "excerpt",
         "module_count",
         "logo_path"
     ];

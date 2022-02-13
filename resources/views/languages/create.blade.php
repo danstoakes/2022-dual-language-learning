@@ -29,8 +29,8 @@
                         <textarea class="form-control" name="description" rows="4" required></textarea>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="logo">SVG Logo</label>
-                        <textarea class="form-control" name="logo" rows="4" required></textarea>
+                        <label for="logo_path">SVG Logo</label>
+                        <textarea class="form-control" name="logo_path" rows="4" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

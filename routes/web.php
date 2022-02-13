@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AJAXController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ModuleController;
@@ -29,9 +30,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/test', [TestController::class, 'index'])->name('test');
-Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
-Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
@@ -40,4 +38,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('languages', LanguageController::class);
     Route::resource('modules', ModuleController::class)->except(['create']);
     Route::resource('phrases', PhraseController::class);
+    Route::get('/test', [TestController::class, 'index'])->name('test');
+    Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
+    Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');
+    Route::get('/phrases/add-to-module/{module_id}', [PhraseController::class, 'addtoModule'])->name('modules.addPhrase');
+    Route::post('/ajax-request/send', [AJAXController::class, 'POST'])->name('ajax.post');
 });

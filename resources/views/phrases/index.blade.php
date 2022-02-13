@@ -33,25 +33,45 @@
                         <table class="table table-hover">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th width="10%">#</th>
-                                    <th width="70%">Name</th>
+                                    <th width="8%"></th>
+                                    <th width="72%">Phrase</th>
                                     <th width="20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $key => $permission)
+                                @foreach ($data as $key => $phrase)
+                                    @if (isset($batchId) && $batchId != $phrase->batch_id)
+                                        <tr class="align-middle">
+                                            <td class="invisible">-</td>
+                                            <td class="invisible"></td>
+                                            <td class="invisible"></td>
+                                        </tr>
+                                    @elseif (!isset($batchId))
+                                        <tr class="align-middle">
+                                            <td class="invisible"></td>
+                                            <td class="invisible"></td>
+                                            <td class="invisible"></td>
+                                        </tr>
+                                    @endif
                                     <tr class="align-middle">
-                                        <td>{{ $permission->id }}</td>
-                                        <td>{{ $permission->phrase }}</td>
-                                        <td class="d-flex">
-                                            <a class="btn btn-primary" href="{{ route('permissions.show', $permission->id) }}">Show</a>
-                                            @can('role-delete')
-                                                {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id], 'class' => 'ms-2']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
-                                                {!! Form::close() !!}
-                                            @endcan
+                                        <td>{!! $phrase->getLogoSVG() !!}</td>
+                                        <td>{{ $phrase->phrase }}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a class="btn btn-primary" href="{{ route('phrases.show', $phrase) }}">Show</a>
+                                                @can('role-delete')
+                                                    <form method="POST" action="{{ route('phrases.destroy', $phrase) }}" class="ms-2">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input class="btn btn-secondary" type="submit" value="Delete" />
+                                                    </form>
+                                                @endcan
+                                            </div>
                                         </td>
                                     </tr>
+                                    @php
+                                        $batchId = $phrase->batch_id;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>

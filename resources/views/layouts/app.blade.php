@@ -11,6 +11,43 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ mix('dist/main.js') }}" defer></script>
 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                }
+            });
+        
+            $(".btn-submit").on('change', function(e) {
+                e.preventDefault();
+
+                var checked = [];
+                $("input:checked").each(function() {
+                    checked.push($(this).val());
+                });
+        
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('ajax.post') }}",
+                    data: {batch_id: checked, module_id: {{ $module ?? -1 }} },
+                    success: function (data) {
+                        setInterval('location.reload()', 100); // to show success message
+                    },
+                    error: function (xhr, status, error) {
+                        setInterval('location.reload()', 100); // to show error message
+
+                        var errorMessage = xhr.status + " - " + xhr.statusText
+                        console.log("ERROR: " + errorMessage);
+                    }
+                });
+        
+            });
+        });
+    </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -81,7 +118,7 @@
             </div>
         </nav>
 
-        <main class="pt-4 pb-6">
+        <main class="pt-4 mb-6">
             @yield('content')
         </main>
         <footer class="navbar footer fixed-bottom bg-white shadow">
