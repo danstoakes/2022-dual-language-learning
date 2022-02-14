@@ -55,4 +55,14 @@ class Phrase extends Model
 
         return "N/A";
     }
+
+    public function getLanguageFlag ()
+    {
+        $language = Language::find($this->language_id);
+
+        if (isset($language))
+            return $language->logo_path;
+
+        return "N/A";
+    }
 }

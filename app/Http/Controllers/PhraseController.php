@@ -142,7 +142,7 @@ class PhraseController extends Controller
             ->with("success", "Phrase deleted successfully");
     }
 
-    public function addToModule ($module)
+    public function manageModulePhrases ($module)
     {
         $phrasesPerPage = count(Language::all()) * 3;
 
@@ -151,6 +151,6 @@ class PhraseController extends Controller
             ->groupBy("batch_id")
             ->get();
 
-        return view("phrases.add-to-module", compact("data", "module"));
+        return view("phrases.manage-module-phrases", compact("data", "module"));
     }
 }

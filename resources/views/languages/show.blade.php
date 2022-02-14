@@ -30,10 +30,14 @@
                                 <a href="{{ route('modules.show', $module['id']) }}">{{ $module["name"] }}</a>                            
                             @endforeach
                         </div>
-                        <div class="mt-3">
-                            <a class="btn btn-primary" href="{{ route('modules.create', $language->id) }}">Create Module</a>
-                        </div>
                     </div>
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    @can('language-list')
+                        <span>
+                            <a class="btn btn-primary" href="{{ route('modules.create', $language->id) }}">Create Module</a>
+                        </span>
+                    @endcan
                 </div>
             </div>
         </div>

@@ -16,24 +16,26 @@
                         </span>
                     @endcan
                 </div>
-                <div class="card-body">
-                    <div class="lead">
-                        <strong>Content:</strong>
-                        {{ $phrase->phrase }}
+                <div class="card-body table-responsive">
+                    <div class="d-flex flex-column mb-2">
+                        <div>
+                            <h4 class="card-title">{{ $phrase->phrase }}</h4>
+                            <p class="card-text language-title">{{ $phrase->getLanguageName() }} {!! $phrase->getLanguageFlag() !!}</p>
+                        </div>
                     </div>
-                    <div class="lead">
-                        <strong>Language:</strong>
-                        {{ $phrase->getLanguageName() }}
-                    </div>
-                    <div class="lead">
-                        <strong>Related phrases:</strong>
-                        @foreach ($phrase->relatedPhrases() as $phrase)
-                            <div class="d-flex">
-                                <p>{!! $phrase->getLogoSVG() !!}</p>
-                                <p>{{ $phrase->phrase }}</p>
-                            </div>
-                        @endforeach
-                    </div>
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Related phrases</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($phrase->relatedPhrases() as $phrase)
+                                <tr class="align-middle">
+                                <td>{{ $phrase->phrase }}</td>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

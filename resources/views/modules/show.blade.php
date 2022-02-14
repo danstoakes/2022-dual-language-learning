@@ -15,16 +15,17 @@
                     @endcan
                 </div>
                 <div class="card-body table-responsive">
-                    <div class="mb-2">
-                        <span>
-                            <a class="btn btn-primary" href="{{ route('modules.addPhrase', $module) }}">Add Phrase</a>
-                        </span>
+                    <div class="d-flex flex-column mb-2">
+                        <div>
+                            <h4 class="card-title">{{ $module->name }}</h4>
+                            <p class="card-text">{{ $module->description }}</p>
+                        </div>
                     </div>
                     <table class="table table-hover">
                         <thead class="thead-dark">
                             <tr>
-                                <th width="80%">Phrase</th>
-                                <th width="20%">Action</th>
+                                <th width="90%">Phrase</th>
+                                <th width="10%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,17 +34,19 @@
                                     <td>{{ $phrase->phrase }}</td>
                                     <td class="d-flex">
                                         <a class="btn btn-primary" href="{{ route('phrases.show', $phrase->id) }}">Show</a>
-                                        @can('language-delete')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['phrases.destroy', $phrase->id], 'class' => 'ms-2']) !!}
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
-                                            {!! Form::close() !!}
-                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                     {{ $phrases->appends($_GET)->links() }}
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    @can('language-list')
+                        <span>
+                            <a class="btn btn-primary" href="{{ route('modules.managePhrases', $module) }}">Manage Phrases</a>
+                        </span>
+                    @endcan
                 </div>
             </div>
         </div>

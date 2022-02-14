@@ -22356,3 +22356,13 @@ a > .dark code {
   color: #0d6efd;
   margin: 0.4rem;
 }
+
+.language-title svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+  color: inherit;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}

@@ -31,7 +31,7 @@
                                     @foreach ($data as $batch)
                                         <tr class="align-middle">
                                             <td>
-                                                <input {{ \App\Models\Module::find($module)->hasBatch($batch->batch_id) ? "checked" : "" }} class="btn-submit" type="checkbox" name="batch_id[]" value="{{ $batch->batch_id }}" />
+                                                <input {{ \App\Models\Module::find($module)->hasBatch($batch->batch_id) ? "checked" : "" }} class="phrase-checkbox" type="checkbox" name="batch_id[]" value="{{ $batch->batch_id }}" />
                                             </td>
                                             <td class="batch-phrase-list">{!! $batch->phrase !!}</td>
                                             <td class="text-black-50">{{ $batch->batch_id }}</td>
@@ -53,4 +53,38 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+            }
+        });
+    
+        $(".phrase-checkbox").on("change", function(e) {
+            e.preventDefault();
+
+            var checked = [];
+            $("input:checked").each(function() {
+                checked.push($(this).val());
+            });
+    
+            $.ajax({
+                type: "POST",
+                url: "{{ route('ajax.post') }}",
+                data: {batch_id: checked, module_id: {{ $module ?? -1 }} },
+                success: function (data) {
+                    setInterval('location.reload()', 100); // to show success message
+                },
+                error: function (xhr, status, error) {
+                    setInterval('location.reload()', 100); // to show error message
+
+                    var errorMessage = xhr.status + " - " + xhr.statusText
+                    console.log("ERROR: " + errorMessage);
+                }
+            });
+    
+        });
+    });
+</script>
 @endsection
