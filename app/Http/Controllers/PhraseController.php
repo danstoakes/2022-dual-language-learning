@@ -141,16 +141,4 @@ class PhraseController extends Controller
         return redirect()->route("phrases.index")
             ->with("success", "Phrase deleted successfully");
     }
-
-    public function manageModulePhrases ($module)
-    {
-        $phrasesPerPage = count(Language::all()) * 3;
-
-        $data = DB::table("phrases")
-            ->select(DB::raw("batch_id, GROUP_CONCAT(DISTINCT phrase SEPARATOR ' <span>|</span> ') as 'phrase'"))
-            ->groupBy("batch_id")
-            ->get();
-
-        return view("phrases.manage-module-phrases", compact("data", "module"));
-    }
 }

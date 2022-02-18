@@ -41,6 +41,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/test', [TestController::class, 'index'])->name('test');
     Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
     Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');
-    Route::get('/phrases/manage-module-phrases/{module_id}', [PhraseController::class, 'manageModulePhrases'])->name('modules.managePhrases');
-    Route::post('/ajax-request/send', [AJAXController::class, 'POST'])->name('ajax.post');
+    Route::get('/modules/manage-module-phrases/{module_id}', [ModuleController::class, 'managePhrases'])->name('modules.managePhrases');
+    Route::post('/modules/{module}/update-phrases', [ModuleController::class, 'updatePhrases'])->name('modules.updatePhrases');
 });

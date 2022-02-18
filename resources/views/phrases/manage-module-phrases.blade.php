@@ -63,16 +63,11 @@
     
         $(".phrase-checkbox").on("change", function(e) {
             e.preventDefault();
-
-            var checked = [];
-            $("input:checked").each(function() {
-                checked.push($(this).val());
-            });
     
             $.ajax({
                 type: "POST",
-                url: "{{ route('ajax.post') }}",
-                data: {batch_id: checked, module_id: {{ $module ?? -1 }} },
+                url: "{{ route('modules.updatePhrases', $module) }}",
+                data: {batch: e.target.value, isChecked: e.target.checked},
                 success: function (data) {
                     setInterval('location.reload()', 100); // to show success message
                 },
@@ -83,7 +78,6 @@
                     console.log("ERROR: " + errorMessage);
                 }
             });
-    
         });
     });
 </script>

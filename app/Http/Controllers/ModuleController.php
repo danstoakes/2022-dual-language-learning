@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Language;
 use App\Models\Module;
+use App\Models\Phrase;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
 
 class ModuleController extends Controller
 {
@@ -112,5 +116,56 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function managePhrases ($module)
+    {
+        $phrasesPerPage = count(Language::all()) * 3;
+
+        $data = DB::table("phrases")
+            ->select(DB::raw("batch_id, GROUP_CONCAT(DISTINCT phrase SEPARATOR ' <span>|</span> ') as 'phrase'"))
+            ->groupBy("batch_id")
+            ->get();
+
+        return view("phrases.manage-module-phrases", compact("data", "module"));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updatePhrases (Request $request, $moduleId)
+    {
+        if ($request->ajax()) 
+        {
+            if ($moduleId)
+            {
+                $module = Module::find($moduleId);
+
+                if ($request->batch) {
+                    $batchId = $request->batch;
+                    $phraseIds = Phrase::where("batch_id", $batchId)->pluck("id")->toArray() ?? [];
+
+                    if (count($phraseIds) > 0) {
+                        $isChecked = filter_var($request->isChecked, FILTER_VALIDATE_BOOLEAN);
+
+                        if ($isChecked) {
+                            foreach ($phraseIds as $phrase)
+                                $module->phrases()->attach($phrase);
+                        } else {
+                            foreach ($phraseIds as $phrase)
+                                $module->phrases()->detach($phrase);
+                        }
+                    }
+                }
+            }
+        }
+        /*         
+        Session::flash("error", "Module could not be updated");
+        return View::make("partials/popup");
+        */
     }
 }
