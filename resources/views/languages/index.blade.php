@@ -2,7 +2,7 @@
 @section('title', 'Language Hub')
 @section('content')
 <div class="container">
-    <div class="row justify-content-center"> <!-- row -->
+    <div class="row justify-content-center">
         @include("partials.popup")
         <div class="col-md-9">
             <div class="card">
@@ -15,21 +15,20 @@
                     @endcan
                 </div>
                 <div class="card-body">
-                    <div class="col-md-12 {{ $data->appends($_GET)->hasPages() ? 'mb-3' : '' }}">
-                        <div class="row">
-                            @foreach($data as $key => $language)
-                                <div class="col-sm-6 col-md-4 {{ $loop->index % 3 == 0 && $loop->count - ($loop->index + 1) > 3 ? 'mb-4' : '' }}">
-                                    <div class="card">
-                                        <span class="card-img-top rounded">{!! $language->logo_path !!}</span>
-                                        <div class="card-body">
+                    <div class="row">
+                        @foreach($data as $key => $language)
+                            <div class="{{ $key != count($data) - 1 ? 'mb-3' : '' }}">
+                                <a href="{{ route('languages.show', $language->id) }}" class="text-decoration-none text-black">
+                                    <div class="card flex flex-row align-items-center language-list-card">
+                                        <span class="card-img-top rounded language-logo d-none d-lg-block">{!! $language->logo_path !!}</span>
+                                        <div class="card-body language-details">
                                             <h5 class="card-title">{{ $language->name }}</h5>
                                             <p class="card-text">{{ $language->excerpt }}</p>
-                                            <a href="{{ route('languages.show', $language->id) }}" class="btn btn-primary">{{ __("View") }}</a>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                     {{ $data->appends($_GET)->links() }}
                 </div>

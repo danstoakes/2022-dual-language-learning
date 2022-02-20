@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Language;
 use App\Models\Module;
 use App\Models\Phrase;
+use App\Rules\HasSVGTag;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -18,10 +19,10 @@ class ModuleController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:language-list|language-create|language-edit|language-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:language-create', ['only' => ['create', 'store']]);
-         $this->middleware('permission:language-edit', ['only' => ['edit', 'update']]);
-         $this->middleware('permission:language-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:module-list|module-create|module-edit|module-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:module-create', ['only' => ['create', 'store']]);
+         $this->middleware('permission:module-edit', ['only' => ['edit', 'update']]);
+         $this->middleware('permission:module-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -34,6 +35,11 @@ class ModuleController extends Controller
         return view('modules.create', ['languageId' => $languageId]);
     }
 
+    private function getDefaultIconSVG () 
+    {
+        return '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" /></svg>';
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -44,8 +50,12 @@ class ModuleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required|max:1024'
+            'description' => 'required|max:1024',
+            'icon_svg' => new HasSVGTag,
         ]);
+
+        if (!isset($request->icon_svg))
+            $request->merge(['icon_svg' => $this->getDefaultIconSVG()]);
     
         $module = Module::create($request->all());
 
@@ -93,14 +103,17 @@ class ModuleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'max:1024',
-            'logo' => 'required'
+            'description' => 'required|max:1024',
+            'icon_svg' => new HasSVGTag,
         ]);
+
+        if (!isset($request->icon_svg))
+            $request->merge(['icon_svg' => $this->getDefaultIconSVG()]);
 
         $module = Module::find($id);
         $module->name = $request->input('name');
         $module->description = $request->input('description');
-        $module->icon_svg = $request->input('logo');
+        $module->icon_svg = $request->input('icon_svg');
         $module->save();
         
         return redirect()->route('modules.show', $module->id)
@@ -115,7 +128,13 @@ class ModuleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $module = Module::find($id);
+        $languageId = $module->language_id;
+
+        $module->delete();
+        
+        return redirect()->route('languages.show', $languageId)
+            ->with('success', 'Module deleted successfully');
     }
 
     public function managePhrases ($module)

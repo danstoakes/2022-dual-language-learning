@@ -15,22 +15,24 @@
                     @endcan
                 </div>
                 <div class="card-body">
-                    {!! Form::model($role, ['route' => ['roles.update', $role->id],'method' => 'PATCH']) !!}
-                        <div class="form-group">
-                            <strong>Name:</strong>
-                            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                    <form method="POST" action="{{ route('roles.update', $role->id) }}">
+                        @csrf
+                        @method("PATCH")
+                        <div class="form-group mb-2">
+                            <label for="name">Name</label>
+                            <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />
                         </div>
                         <div class="form-group mb-3">
-                            <strong>Permission:</strong>
-                            <br/>
-                            @foreach($permission as $value)
-                                <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                                {{ $value->name }}</label>
-                            <br/>
+                            <label for="permission">Permission</label>
+                            @foreach ($permissions as $permission)
+                                <div class="form-group mb-2 d-flex">
+                                    <input {{ $role->permissions->contains($permission) ? 'checked' : '' }} class="mt-auto mb-auto form-check-input" style="margin-right: 0.5em" name="permission" type="checkbox" />
+                                    <label for="permission">{{ $permission->name }}</label>
+                                </div>
                             @endforeach
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    {!! Form::close() !!}
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
                 </div>
             </div>
         </div>

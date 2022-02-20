@@ -57,8 +57,14 @@
                                 @else
                                     <li><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                                 @endif
-                            @else
+                            @elseif (Request::is('admin-portal'))
                                 <li><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                            @else
+                                @if(Gate::check("user-list") || Gate::check("role-list") || Gate::check("permission-list") || Gate::check("language-list"))
+                                    <li><a class="nav-link" href="{{ route('portal') }}">Portal</a></li>
+                                @else
+                                    <li><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                @endif
                             @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

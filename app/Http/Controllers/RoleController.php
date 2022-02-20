@@ -41,9 +41,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
+        $permissions = Permission::get();
 
-        return view('roles.create', compact('permission'));
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -91,13 +91,13 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permission = Permission::get();
+        $permissions = Permission::all();
         $rolePermissions = DB::table('role_has_permissions')
             ->where('role_has_permissions.role_id', $id)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
     
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
+        return view('roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     /**

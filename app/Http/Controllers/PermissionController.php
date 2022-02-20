@@ -70,7 +70,6 @@ class PermissionController extends Controller
     public function show($id)
     {
         $permission = Permission::find($id);
-    
         return view('permissions.show', compact('permission'));
     }
 
@@ -83,7 +82,6 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $permission = Permission::find($id);
-    
         return view('permissions.edit', compact('permission'));
     }
 

@@ -10,7 +10,7 @@
                     <p class="m-0">Add Phrase</p>
                     @can('language-list')
                         <span>
-                            <a class="btn btn-primary" href="{{ url()->previous() }}">Back</a>
+                            <a class="btn btn-primary" href="{{ route('phrases.index') }}">Back</a>
                         </span>
                     @endcan
                 </div>
@@ -32,7 +32,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="form-group mb-2 d-flex">
+                        <div class="form-group d-flex negative-margin-top mb-2">
                             <input style="margin-right: 0.5em" class="mt-auto mb-auto form-check-input" name="partner_phrase" type="checkbox" id="phrase_create_checkbox" />
                             <label for="partner_phrase">This phrase already exists in another language</label>
                         </div>
@@ -47,7 +47,7 @@
                                 @endif
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                        <button type="submit" class="btn btn-primary mt-2">Add</button>
                     </form>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use App\Rules\HasSVGTag;
 use Illuminate\Http\Request;
 
 class LanguageController extends Controller
@@ -14,10 +15,10 @@ class LanguageController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:language-list|language-create|language-edit|language-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:language-create', ['only' => ['create','store']]);
-         $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:language-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:language-list|language-create|language-edit|language-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:language-create', ['only' => ['create','store']]);
+        $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:language-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -51,7 +52,9 @@ class LanguageController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required|max:1024'
+            'excerpt' => 'max:255',
+            'description' => 'required|max:1024',
+            'logo_path' => ['required', new HasSVGTag],
         ]);
     
         Language::create($request->all());
@@ -97,9 +100,9 @@ class LanguageController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'excerpt' => 'max:254',
-            'description' => 'max:1024',
-            'logo_path' => 'required'
+            'excerpt' => 'max:255',
+            'description' => 'required|max:1024',
+            'logo_path' => ['required', new HasSVGTag],
         ]);
 
         $language = Language::find($id);
@@ -121,6 +124,9 @@ class LanguageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Language::find($id)->delete();
+        
+        return redirect()->route('languages.index')
+            ->with('success', 'Language deleted successfully');
     }
 }

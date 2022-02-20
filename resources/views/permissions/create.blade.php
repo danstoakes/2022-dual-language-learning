@@ -15,13 +15,13 @@
                     @endcan
                 </div>
                 <div class="card-body">
-                    {!! Form::open(array('route' => 'permissions.store','method'=>'POST')) !!}
+                    <form method="POST" action="{{ route('permissions.store') }}">
                         <div class="form-group mb-3">
-                            <strong>Name:</strong>
-                            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                            <label for="name">Name</label>
+                            <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    {!! Form::close() !!}
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
                 </div>
             </div>
         </div>

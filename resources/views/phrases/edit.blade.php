@@ -33,7 +33,7 @@
                                     @endif
                                 </select>
                             </div>
-                            <div class="form-group mb-2 d-flex">
+                            <div class="form-group negative-margin-top mb-2 d-flex">
                                 <input {{ count($phrase->relatedPhrases()) > 0 ? "checked" : "" }} style="margin-right: 0.5em" class="mt-auto mb-auto form-check-input" name="partner_phrase" type="checkbox" id="phrase_create_checkbox" />
                                 <label for="partner_phrase">This phrase already exists in another language</label>
                             </div>

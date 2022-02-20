@@ -42,7 +42,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::all();
         return view('users.create', compact('roles'));
     }
 
@@ -92,8 +92,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name', 'name')->all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
+        $roles = Role::all();
+        $userRole = $user->roles->pluck('name', 'id')->all();
     
         return view('users.edit', compact('user', 'roles', 'userRole'));
     }
@@ -109,8 +109,8 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'confirmed',
+            'email' => 'required|email|unique:users,email' . $id,
+            'password' => 'required|confirmed',
             'roles' => 'required'
         ]);
     

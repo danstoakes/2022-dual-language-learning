@@ -15,29 +15,38 @@
                     @endcan
                 </div>
                 <div class="card-body">
-                    {!! Form::model($user, ['route' => ['users.update', $user->id], 'method'=>'PATCH']) !!}
-                        <div class="form-group">
-                            <strong>Name:</strong>
-                            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                    <form method="POST" action="{{ route('users.update', $user->id) }}">
+                        @csrf
+                        @method("PATCH")
+                        <div class="form-group mb-2">
+                            <label for="name">Name</label>
+                            <input class="form-control" type="text" name="name" value="{{ old('name') ?? $user->name }}" required />
                         </div>
-                        <div class="form-group">
-                            <strong>Email:</strong>
-                            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
+                        <div class="form-group mb-2">
+                            <label for="email">Email</label>
+                            <input class="form-control" type="text" name="email" value="{{ old('email') ?? $user->email }}" required />
                         </div>
-                        <div class="form-group">
-                            <strong>Password:</strong>
-                            {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
+                        <div class="form-group mb-2">
+                            <label for="password">Password</label>
+                            <input class="form-control" type="password" name="password" required />
                         </div>
-                        <div class="form-group">
-                            <strong>Confirm Password:</strong>
-                            {!! Form::password('password_confirmation', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
+                        <div class="form-group mb-2">
+                            <label for="password_confirmation">Confirm Password</label>
+                            <input class="form-control" type="password" name="email" required />
                         </div>
                         <div class="form-group mb-3">
-                            <strong>Role:</strong>
-                            {!! Form::select('roles[]', $roles, $userRole, array('class' => 'form-control form-select form-select-sm')) !!}
+                            <label for="role">Role</label>
+                            <select name="role" class="form-control form-select form-select-md" required>
+                                <option>Select a role</option>
+                                @if (isset($roles))
+                                    @foreach ($roles as $key => $role)
+                                        <option {{ $user->roles->contains($role) ? 'selected' : '' }} value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    {!! Form::close() !!}
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
                 </div>
             </div>
         </div>

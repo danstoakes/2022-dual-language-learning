@@ -104,3 +104,37 @@
         fill: currentColor;
     }
 }
+
+.language-logo {
+    flex: 2;
+}
+
+.language-details {
+    flex: 7;
+}
+
+.language-list-card:hover {
+    transition: background-color 200ms linear;
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.language-title-large {
+    svg {
+        vertical-align: -0.175em !important;
+    }
+}
+
+.text-icon-inline {
+    svg {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        font-size: inherit;
+        color: inherit;
+        vertical-align: -0.175em;
+    }
+}
+
+.negative-margin-top {
+    margin-top: -0.5rem;
+}

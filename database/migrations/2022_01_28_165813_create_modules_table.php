@@ -20,7 +20,7 @@ class CreateModulesTable extends Migration
                 $table->unsignedBigInteger('language_id');
                 $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
                 $table->text('name');
-                $table->string('description', 2048);
+                $table->string('description', 1024);
                 $table->text('icon_svg');
                 $table->boolean('completed')->default(0);
                 $table->timestamps();
