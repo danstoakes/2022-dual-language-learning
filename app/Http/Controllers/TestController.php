@@ -8,6 +8,8 @@ use Google\Cloud\TextToSpeech\V1\SynthesisInput;
 use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
 use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
 
+use Illuminate\Support\Facades\Storage;
+
 class TestController extends Controller
 {
     private $textToSpeechClient;
@@ -31,10 +33,10 @@ class TestController extends Controller
 
         $this->textToSpeechClient = new TextToSpeechClient();
 
-        //$this->generateSample("Hej, jag heter Dan och jag bor i Sverige med mina föräldrar", "swedish");
-        //$this->generateSample("Hallo, ich heiße Dan und lebe mit meiner Schwester in Deutschland.", "german");
+        $this->generateSample("Hej, jag heter Dan och jag bor i Sverige med mina föräldrar", "swedish");
+        $this->generateSample("Hallo, ich heiße Dan und lebe mit meiner Schwester in Deutschland.", "german");
 
-        $this->generateSample("こんにちは私はケイトですそして私はシュレックに恋をしています", "japanese");
+        // $this->generateSample("こんにちは私はケイトですそして私はシュレックに恋をしています", "japanese");
     }
 
     public function generateSample ($content, $language) 
@@ -57,7 +59,10 @@ class TestController extends Controller
         $audioConfig->setAudioEncoding(AudioEncoding::MP3);
 
         $resp = $this->textToSpeechClient->synthesizeSpeech($input, $voice, $audioConfig);
-        file_put_contents("" . rand(0, 99999) . ".mp3", $resp->getAudioContent());
+
+        Storage::put("" . rand(0, 99999) . ".mp3", $resp->getAudioContent());
+
+        // Storage::disk('public')->put("" . rand(0, 99999) . ".mp3", $resp->getAudioContent());
     }
 
     public function configureSwedish ($voice)

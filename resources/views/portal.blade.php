@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="row mb-4">
                 @can('language-list')
-                    <div class="">
+                    <div>
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ __("Language Hub") }}</h5>
@@ -41,7 +41,7 @@
                     </div>
                 @endcan
             </div>
-            <div class="row">
+            <div class="row mb-4">
                 @can('permission-list')
                     <div class="col-sm-6 mb-4 mb-sm-0">
                         <div class="card">
@@ -60,6 +60,19 @@
                                 <h5 class="card-title">{{ __("Phrase Hub") }}</h5>
                                 <p class="card-text">{{ __("Add, manage or delete existing phrases.") }}</p>
                                 <a href="{{ route('phrases.index') }}" class="btn btn-primary">{{ __("View") }}</a>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+            </div>
+            <div class="row">
+                @can('language-list')
+                    <div class="">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ __("Recording Studio") }}</h5>
+                                <p class="card-text">{{ __("Play, generate and manage vocal recordings for phrases.") }}</p>
+                                <a href="{{ route('recordings.index') }}" class="btn btn-primary">{{ __("View") }}</a>
                             </div>
                         </div>
                     </div>

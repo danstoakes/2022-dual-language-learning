@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PhraseController;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\RecordingController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('languages', LanguageController::class);
     Route::resource('modules', ModuleController::class)->except(['create']);
     Route::resource('phrases', PhraseController::class);
+    Route::resource('recordings', RecordingController::class);
     Route::get('/test', [TestController::class, 'index'])->name('test');
     Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
     Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');
