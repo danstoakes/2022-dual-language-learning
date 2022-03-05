@@ -42,6 +42,33 @@ class LanguageController extends Controller
         return view('languages.create');
     }
 
+    public static function generateSlug ($text, string $divider = '-')
+    {
+        // replace non letter or digits by divider
+        $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        // trim
+        $text = trim($text, $divider);
+
+        // remove duplicate divider
+        $text = preg_replace('~-+~', $divider, $text);
+
+        // lowercase
+        $text = strtolower($text);
+
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        return $text;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -57,7 +84,13 @@ class LanguageController extends Controller
             'logo_path' => ['required', new HasSVGTag],
         ]);
     
-        Language::create($request->all());
+        $language = new Language;
+        $language->name = $request->input('name');
+        $language->slug = $this->generateSlug($request->name);
+        $language->excerpt = $request->input('excerpt');
+        $language->description = $request->input('description');
+        $language->logo_path = $request->input('logo_path');
+        $language->save();
     
         return redirect()->route('languages.index')
             ->with('success', 'Language created successfully.');

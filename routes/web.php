@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('modules', ModuleController::class)->except(['create']);
     Route::resource('phrases', PhraseController::class);
     Route::resource('recordings', RecordingController::class);
+    Route::get('/recordings/generate/{phrase}', [RecordingController::class, 'generate'])->name('recordings.generate');
     Route::get('/test', [TestController::class, 'index'])->name('test');
     Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
     Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');

@@ -16,9 +16,6 @@ class CreateRecordingsTable extends Migration
         if (!Schema::hasTable('recordings')) {
             Schema::create('recordings', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('phrase_id');
-                $table->foreign('phrase_id')->references('id')->on('phrases')->onDelete('cascade');
-                $table->unsignedBigInteger('recording_id');
                 $table->timestamps();
             });
         }

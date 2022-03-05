@@ -16,6 +16,7 @@
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('permissions.store') }}">
+                        @csrf
                         <div class="form-group mb-3">
                             <label for="name">Name</label>
                             <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />

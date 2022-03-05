@@ -56,6 +56,48 @@ class Phrase extends Model
         return "N/A";
     }
 
+    public function getLanguageSlug ()
+    {
+        $language = Language::find($this->language_id);
+
+        if (isset($language))
+            return $language->slug;
+
+        return getLanguageName();
+    }
+
+    public function generateSlug (string $divider = '-')
+    {
+        // replace non letter or digits by divider
+        $text = preg_replace('~[^\pL\d]+~u', $divider, $this->phrase);
+
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        // trim
+        $text = trim($text, $divider);
+
+        // remove duplicate divider
+        $text = preg_replace('~-+~', $divider, $text);
+
+        // lowercase
+        $text = strtolower($text);
+
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        $positionOfSecondHyphen = strpos($text, '-', strpos($text, '-') + 1);
+
+        if ($positionOfSecondHyphen !== false)
+            return substr($text, 0, $positionOfSecondHyphen);
+
+        return substr($text, 0, 10);
+    }
+
     public function getLanguageFlag ()
     {
         $language = Language::find($this->language_id);
@@ -64,5 +106,10 @@ class Phrase extends Model
             return $language->logo_path;
 
         return "N/A";
+    }
+
+    public function recording ()
+    {
+        return $this->belongsTo(Recording::class)->first();
     }
 }

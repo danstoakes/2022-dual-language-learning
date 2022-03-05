@@ -20,7 +20,7 @@
                         @method("PATCH")
                         <div class="form-group mb-2">
                             <label for="name">Name</label>
-                            <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />
+                            <input class="form-control" type="text" name="name" value="{{ old('name', $role->name) }}" required />
                         </div>
                         <div class="form-group mb-3">
                             <label for="permission">Permission</label>
@@ -31,7 +31,7 @@
                                 </div>
                             @endforeach
                         </div>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Phrase;
 use App\Models\Recording;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+use Google\Cloud\TextToSpeech\V1\AudioConfig;
+use Google\Cloud\TextToSpeech\V1\AudioEncoding;
+use Google\Cloud\TextToSpeech\V1\SynthesisInput;
+use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
+use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
 
 class RecordingController extends Controller
 {
+    private $textToSpeechClient;
+    
     /**
      * Create a new instance of the class
      *
@@ -18,6 +28,13 @@ class RecordingController extends Controller
         $this->middleware('permission:language-create', ['only' => ['create','store']]);
         $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:language-delete', ['only' => ['destroy']]);
+
+        // https://cloud.google.com/text-to-speech/docs/voices
+        // https://cloud.google.com/text-to-speech/docs/reference/rpc/google.cloud.texttospeech.v1
+        
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=/Users/danstoakes/Projects/dual-language-learning-700e1339570b.json');
+
+        $this->textToSpeechClient = new TextToSpeechClient();
     }
 
     /**
@@ -38,7 +55,10 @@ class RecordingController extends Controller
      */
     public function create()
     {
-        //
+        $data = Phrase::orderBy("batch_id", "ASC")
+            ->orderBy("language_id", "DESC")->paginate(20);
+
+        return view("recordings.create", compact("data"));
     }
 
     /**
@@ -95,5 +115,46 @@ class RecordingController extends Controller
     public function destroy(Recording $recording)
     {
         //
+    }
+
+    public function configureSwedish ($voice)
+    {
+        $voice->setLanguageCode("sv-SE");
+        $voice->setName("sv-SE-Wavenet-D"); // A, B, D
+        $voice->setSSMLGender(0);
+    }
+
+    public function configureGerman ($voice)
+    {
+        $voice->setLanguageCode("de-DE");
+        $voice->setName("de-DE-Wavenet-C"); // A, C, F
+        $voice->setSSMLGender(0);
+    }
+
+    public function generate(Phrase $phrase)
+    {
+        $languageSlug = $phrase->getLanguageSlug();
+
+        $input = new SynthesisInput();
+        $input->setText($phrase->phrase);
+
+        $voice = new VoiceSelectionParams();
+        if ($languageSlug == "swedish") 
+        {
+            $this->configureSwedish($voice);
+        } else if ($languageSlug == "german")
+        {
+            $this->configureGerman($voice);
+        }
+
+        $audioConfig = new AudioConfig();
+        $audioConfig->setAudioEncoding(AudioEncoding::MP3);
+
+        $response = $this->textToSpeechClient->synthesizeSpeech($input, $voice, $audioConfig);
+
+        Storage::put($languageSlug . '-' . $phrase->generateSlug() . ".mp3", $response->getAudioContent());
+
+        return redirect()->back()
+            ->with('success', 'Recording generated successfully!');
     }
 }
