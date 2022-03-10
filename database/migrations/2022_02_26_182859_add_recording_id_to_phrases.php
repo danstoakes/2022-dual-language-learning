@@ -16,7 +16,7 @@ class AddRecordingIdToPhrases extends Migration
         if (Schema::hasTable('phrases')) {
             Schema::table('phrases', function (Blueprint $table) {
                 $table->unsignedBigInteger('recording_id')->after('language_id')->nullable();
-                $table->foreign('recording_id')->references('id')->on('recordings')->onDelete('cascade');
+                $table->foreign('recording_id')->references('id')->on('recordings');
             });
         }
     }

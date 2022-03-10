@@ -28,11 +28,11 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="password">Password</label>
-                            <input class="form-control" type="password" name="password" required />
+                            <input class="form-control" type="password" name="password" placeholder="Optional" />
                         </div>
                         <div class="form-group mb-2">
                             <label for="password_confirmation">Confirm Password</label>
-                            <input class="form-control" type="password" name="email" required />
+                            <input class="form-control" type="password" name="password_confirmation" placeholder="Optional" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="role">Role</label>

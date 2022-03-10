@@ -21,6 +21,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "bootstrap-detect-breakpoint": "^1.0.8",
         "jquery": "^3.6.0"
     }
 }

@@ -44,8 +44,9 @@ class RecordingController extends Controller
      */
     public function index()
     {
-        $recordings = Recording::orderBy('id', 'ASC')->paginate(16);
-        return view('recordings.index', compact('recordings'));
+        $limit = 16;
+        $recordings = Recording::orderBy('id', 'ASC')->paginate($limit);
+        return view('recordings.index', compact('recordings', 'limit'));
     }
 
     /**
@@ -114,7 +115,16 @@ class RecordingController extends Controller
      */
     public function destroy(Recording $recording)
     {
-        //
+        Storage::delete($recording->path);
+
+        $phrase = $recording->phrase();
+        $phrase->recording_id = null;
+        $phrase->save();
+
+        $recording->delete();
+        
+        return redirect()->route("recordings.create")
+            ->with("success", "Recording deleted successfully");
     }
 
     public function configureSwedish ($voice)
@@ -153,6 +163,20 @@ class RecordingController extends Controller
         $response = $this->textToSpeechClient->synthesizeSpeech($input, $voice, $audioConfig);
 
         Storage::put($languageSlug . '-' . $phrase->generateSlug() . ".mp3", $response->getAudioContent());
+
+        $recording = $phrase->recording();
+        if ($recording) {
+            if ($recording->path !== Storage::url($languageSlug . '-' . $phrase->generateSlug() . ".mp3"))
+                Storage::delete($recording->path);
+        } else {
+            $recording = new Recording;
+        }
+
+        $recording->path = Storage::url($languageSlug . '-' . $phrase->generateSlug() . ".mp3");
+        $recording->save();
+
+        $phrase->recording_id = $recording->id;
+        $phrase->save();
 
         return redirect()->back()
             ->with('success', 'Recording generated successfully!');

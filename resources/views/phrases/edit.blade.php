@@ -10,7 +10,7 @@
                         <p class="m-0">Edit Phrase</p>
                         @can('language-list')
                             <span>
-                                <a class="btn btn-primary" href="{{ url()->previous() }}">Back</a>
+                                <a class="btn btn-primary" href="{{ route('phrases.show', $phrase) }}">Back</a>
                             </span>
                         @endcan
                     </div>

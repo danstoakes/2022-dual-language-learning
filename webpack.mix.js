@@ -15,7 +15,8 @@ mix.js('resources/js/app.js', 'public/js')
     .scripts([
         'resources/js/script/popup.js',
         'resources/js/script/display_hidden.js',
-        'resources/js/script/character_count.js'
+        'resources/js/script/character_count.js',
+        'resources/js/script/play_recording.js'
     ], 'public/dist/main.js') // creates 'dist/script.js'
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();

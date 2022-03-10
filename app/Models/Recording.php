@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Recording extends Model
 {
     use HasFactory;
+
+    public function phrase ()
+    {
+        return $this->hasOne(Phrase::class)->first();
+    }
 }

@@ -33,6 +33,16 @@ class PermissionController extends Controller
         return view('permissions.index', compact('data'));
     }
 
+    private function getDefaultDescriptions ()
+    {
+        return [
+            "Allows the user to list or view.",
+            "Allows the user to create, generate or add.",
+            "Allows the user to modify or change.",
+            "Allows the user to delete permanently."
+        ];
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +50,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('permissions.create');
+        $descriptions = $this->getDefaultDescriptions();
+        return view('permissions.create', compact("descriptions"));
     }
 
     /**
@@ -53,9 +64,10 @@ class PermissionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:permissions,name',
+            'description' => 'max:255'
         ]);
     
-        Permission::create(['name' => $request->input('name')]);
+        Permission::create($request->all());
     
         return redirect()->route('permissions.index')
             ->with('success', 'Permission created successfully.');
@@ -82,7 +94,9 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $permission = Permission::find($id);
-        return view('permissions.edit', compact('permission'));
+        $descriptions = $this->getDefaultDescriptions();
+
+        return view('permissions.edit', compact('permission', 'descriptions'));
     }
 
     /**
@@ -95,11 +109,13 @@ class PermissionController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'description' => 'max:255'
         ]);
     
         $permission = Permission::find($id);
-        $permission->name = $request->input('name');
+        $permission->name = $request->name;
+        $permission->description = $request->description;
         $permission->save();
         
         return redirect()->route('permissions.index')

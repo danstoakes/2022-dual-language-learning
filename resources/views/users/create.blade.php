@@ -31,7 +31,7 @@
                         </div>
                         <div class="form-group mb-2">
                             <label for="password_confirmation">Confirm Password</label>
-                            <input class="form-control" type="password" name="email" required />
+                            <input class="form-control" type="password" name="password_confirmation" required />
                         </div>
                         <div class="form-group mb-3">
                             <label for="role">Role</label>

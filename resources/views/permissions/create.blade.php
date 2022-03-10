@@ -21,6 +21,18 @@
                             <label for="name">Name</label>
                             <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input class="form-control" list="datalistOptions" name="description" placeholder="Optional" maxlength="255" value="{{ old('description') }}" oninput="changeCount(event, 'excerpt_characters')" onfocus="changeCount(event, 'excerpt_characters')">
+                            <datalist id="datalistOptions">
+                                @if (isset($descriptions))
+                                    @foreach ($descriptions as $description)
+                                        <option value="{{ $description }}">{{ $description }}</option>
+                                    @endforeach
+                                @endif
+                            </datalist>
+                            <small id="excerpt_characters" class="form-text text-muted"></small>
+                        </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
                 </div>

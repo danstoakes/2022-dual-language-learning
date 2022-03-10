@@ -25,7 +25,7 @@
                             <label for="permission">Permission</label>
                             @foreach ($permissions as $permission)
                                 <div class="form-group mb-2 d-flex">
-                                    <input class="mt-auto mb-auto form-check-input" style="margin-right: 0.5em" name="permission" type="checkbox" />
+                                    <input class="mt-auto mb-auto form-check-input" style="margin-right: 0.5em" name="permission[]" type="checkbox" value="{{ $permission->id }}" />
                                     <label for="permission">{{ $permission->name }}</label>
                                 </div>
                             @endforeach

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Create Language')
+@section('title', 'Add Language')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -7,7 +7,7 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="m-0">Create Language</p>
+                    <p class="m-0">Add Language</p>
                     @can('language-list')
                         <span>
                             <a class="btn btn-primary" href="{{ route('languages.index') }}">Back</a>
@@ -35,7 +35,7 @@
                             <label for="logo_path">SVG Logo</label>
                             <textarea class="form-control" name="logo_path" rows="4" required>{{ old("logo_path") }}</textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
                     </form>
                 </div>
             </div>

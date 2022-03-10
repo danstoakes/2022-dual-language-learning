@@ -59,14 +59,14 @@
                             <span>
                                 <a class="btn btn-primary" href="{{ route('modules.managePhrases', $module) }}">Manage Phrases</a>
                             </span>
-                            <span>
-                                @can('phrase-delete')
-                                    {!! Form::open(['method' => 'DELETE','route' => ['modules.destroy', $module->id], 'class' => 'ms-2']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
-                                    {!! Form::close() !!}
-                                @endcan
-                            </span>
                         @endcan
+                        <span>
+                            @can('phrase-delete')
+                                {!! Form::open(['method' => 'DELETE','route' => ['modules.destroy', $module->id], 'class' => 'ms-2']) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-outline-primary']) !!}
+                                {!! Form::close() !!}
+                            @endcan
+                        </span>
                     </div>
                 @endif
             </div>

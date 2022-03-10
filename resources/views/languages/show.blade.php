@@ -52,7 +52,7 @@
                             <span>
                                 @can('language-delete')
                                     {!! Form::open(['method' => 'DELETE','route' => ['languages.destroy', $language->id], 'class' => 'ms-2']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-outline-primary']) !!}
                                     {!! Form::close() !!}
                                 @endcan
                             </span>

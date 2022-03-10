@@ -24,7 +24,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">Dual Language Learning</a>
+                <a class="navbar-brand text-primary" href="{{ url('/') }}">Dual Language Learning</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -53,21 +53,21 @@
                         @else
                             @if(Request::is('home'))
                                 @if(Gate::check("user-list") || Gate::check("role-list") || Gate::check("permission-list") || Gate::check("language-list"))
-                                    <li><a class="nav-link" href="{{ route('portal') }}">Portal</a></li>
+                                    <li><a class="nav-link text-primary" href="{{ route('portal') }}">Portal</a></li>
                                 @else
-                                    <li><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                    <li><a class="nav-link text-primary" href="{{ route('home') }}">Home</a></li>
                                 @endif
                             @elseif (Request::is('admin-portal'))
-                                <li><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                <li><a class="nav-link text-primary" href="{{ route('home') }}">Home</a></li>
                             @else
                                 @if(Gate::check("user-list") || Gate::check("role-list") || Gate::check("permission-list") || Gate::check("language-list"))
-                                    <li><a class="nav-link" href="{{ route('portal') }}">Portal</a></li>
+                                    <li><a class="nav-link text-primary" href="{{ route('portal') }}">Portal</a></li>
                                 @else
-                                    <li><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                    <li><a class="nav-link text-primary" href="{{ route('home') }}">Home</a></li>
                                 @endif
                             @endif
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -89,7 +89,7 @@
             </div>
         </nav>
 
-        <main class="pt-4 mb-6">
+        <main class="pt-4 mb-5">
             @yield('content')
         </main>
         <footer class="navbar footer fixed-bottom bg-white shadow">

@@ -30,7 +30,20 @@ class PermissionSeeder extends Seeder
             'language-list',
             'language-create',
             'language-edit',
-            'language-delete'
+            'language-delete',
+            'module-list',
+            'module-create',
+            'module-edit',
+            'module-delete',
+            'phrase-list',
+            'phrase-create',
+            'phrase-edit',
+            'phrase-delete',
+            'phrase-manage',
+            'recording-list',
+            'recording-create',
+            'recording-edit',
+            'recording-delete'
         ];
 
         foreach ($data as $permission) {

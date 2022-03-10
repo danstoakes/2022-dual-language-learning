@@ -20,8 +20,8 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th width="8%"></th>
-                                    <th width="72%">Phrase</th>
-                                    <th width="20%">Action</th>
+                                    <th width="67%">Phrase</th>
+                                    <th width="25%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,13 +44,13 @@
                                         <td>{{ $phrase->phrase }}</td>
                                         <td>
                                             <div class="d-flex">
-                                                <a class="btn btn-primary" href="{{ route('recordings.generate', $phrase) }}">Generate</a>
+                                                <a class="btn btn-primary" href="{{ route('recordings.generate', $phrase) }}">{{ $phrase->recording() ? 'Re-generate' : 'Generate' }}</a>
                                                 @can('recording-delete')
                                                     @if ($phrase->recording())
-                                                        <form method="POST" action="{{ route('recordings.destroy', $phrase) }}" class="ms-2">
+                                                        <form method="POST" action="{{ route('recordings.destroy', $phrase->recording()) }}" class="ms-2">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <input class="btn btn-secondary" type="submit" value="Delete" />
+                                                            <input class="btn btn-outline-primary" type="submit" value="Delete" />
                                                         </form>
                                                     @endif
                                                 @endcan

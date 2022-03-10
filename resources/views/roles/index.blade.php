@@ -33,7 +33,7 @@
                                             <a class="btn btn-primary" href="{{ route('roles.show',$role->id) }}">Show</a>
                                             @can('role-delete')
                                                 {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id], 'class' => 'ms-2']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-secondary']) !!}
+                                                {!! Form::submit('Delete', ['class' => 'btn btn-outline-primary']) !!}
                                                 {!! Form::close() !!}
                                             @endcan
                                         </div>

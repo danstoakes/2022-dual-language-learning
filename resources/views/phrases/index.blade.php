@@ -63,7 +63,7 @@
                                                     <form method="POST" action="{{ route('phrases.destroy', $phrase) }}" class="ms-2">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <input class="btn btn-secondary" type="submit" value="Delete" />
+                                                        <input class="btn btn-outline-primary" type="submit" value="Delete" />
                                                     </form>
                                                 @endcan
                                             </div>

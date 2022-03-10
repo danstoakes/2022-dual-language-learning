@@ -58,9 +58,11 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
-    
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+
+        $role = Role::create(['name' => $request->name]);
+
+        $permissions = $request->permission;
+        $role->syncPermissions($permissions);
     
         return redirect()->route('roles.index')
             ->with('success', 'Role created successfully.');
@@ -76,7 +78,7 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $rolePermissions = Permission::join('role_has_permissions', 'role_has_permissions.permission_id', 'permissions.id')
-            ->where('role_has_permissions.role_id',$id)
+            ->where('role_has_permissions.role_id', $id)
             ->get();
     
         return view('roles.show', compact('role', 'rolePermissions'));
@@ -110,17 +112,18 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:roles,name,'  . $id,
             'permission' => 'required',
         ]);
     
         $role = Role::find($id);
-        $role->name = $request->input('name');
+        $role->name = $request->name;
         $role->save();
+
+        $permissions = $request->permission;
+        $role->syncPermissions($permissions);
     
-        $role->syncPermissions($request->input('permission'));
-    
-        return redirect()->route('roles.index')
+        return redirect()->route('roles.show', $role)
             ->with('success', 'Role updated successfully.');
     }
 
