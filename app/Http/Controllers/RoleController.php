@@ -56,10 +56,14 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
+            'description' => 'required|max:128',
             'permission' => 'required',
         ]);
 
-        $role = Role::create(['name' => $request->name]);
+        $role = new Role;
+        $role->name = $request->name;
+        $role->description = $request->description;
+        $role->save();
 
         $permissions = $request->permission;
         $role->syncPermissions($permissions);
@@ -113,11 +117,13 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name,'  . $id,
+            'description' => 'required|max:128',
             'permission' => 'required',
         ]);
     
         $role = Role::find($id);
         $role->name = $request->name;
+        $role->description = $request->description;
         $role->save();
 
         $permissions = $request->permission;

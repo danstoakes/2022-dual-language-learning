@@ -112,4 +112,11 @@ class Phrase extends Model
     {
         return $this->belongsTo(Recording::class)->first();
     }
+
+    public function getBatchCount ()
+    {
+        $batchId = $this->batch_id;
+
+        return count(Phrase::where('batch_id', $batchId)->get());
+    }
 }

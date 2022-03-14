@@ -10,49 +10,46 @@
                     <p class="m-0">Users</p>
                     @can('user-create')
                         <span>
-                            <a class="btn btn-primary" href="{{ route('users.create') }}">New User</a>
+                            <a class="btn btn-primary" href="{{ route('users.create') }}">
+                                <p class="text-icon-inline card-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 d-inline d-sm-none" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="d-none d-sm-inline">
+                                        New User
+                                    </span>
+                                </p>
+                            </a>
                         </span>
+                    @else
+                        @can('user-list')
+                            <span>
+                                <a class="btn btn-primary" href="{{ route('users.index') }}">Back</a>
+                            </span>
+                        @endcan
                     @endcan
                 </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th width="10%">#</th>
-                                <th width="15%">Name</th>
-                                <th width="32%">Email</th>
-                                <th width="13%">Role</th>
-                                <th width="20%">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $key => $user)
-                                <tr class="align-middle">
-                                    <td>{{ $user->id }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>
-                                        @if(!empty($user->getRoleNames()))
-                                            @foreach($user->getRoleNames() as $val)
-                                                {{ ucfirst($val) }}
-                                            @endforeach
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a class="btn btn-primary" href="{{ route('users.show', $user->id) }}">Show</a>
-                                            @can('user-delete')
-                                                {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id], 'class' => 'ms-2']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-outline-primary']) !!}
-                                                {!! Form::close() !!}
-                                            @endcan
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {{ $data->render() }}
+                <div class="card-body">
+                    @foreach ($data as $key => $user)
+                        <div class="{{ $key != count($data) - 1 ? 'mb-3' : '' }}">
+                            <a href="{{ route('users.show', $user->id) }}" class="text-decoration-none text-black">
+                                <div class="card flex flex-row align-items-center language-list-card">
+                                    <div class="card-body language-details">
+                                        @php
+                                            $userRole = "User";
+                                            if (!empty($user->getRoleNames())) {
+                                                foreach ($user->getRoleNames() as $role)
+                                                    $userRole = $role;
+                                            }
+                                        @endphp
+                                        <span class="badge badge-primary role-badge">{{ $userRole }}</span>
+                                        <h4 class="card-title language-title language-title-large">{{ $user->name }}</h4>
+                                        <p class="card-text">{{ $user->email }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

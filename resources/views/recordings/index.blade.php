@@ -9,7 +9,7 @@
                 <p class="m-0">Recordings</p>
                 @can('language-create')
                     <span>
-                        <a class="btn btn-primary" href="{{ route('recordings.create') }}">Go to Recording Studio</a>
+                        <a class="btn btn-primary" href="{{ route('recordings.create') }}">Manage</a>
                     </span>
                 @endcan
             </div>

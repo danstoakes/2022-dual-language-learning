@@ -20796,7 +20796,22 @@ a > .dark code {
 }
 
 .language-logo {
-  flex: 2;
+  flex: 1.6;
+}
+
+.phrase-language-logo {
+  flex: 0.5;
+}
+
+.phrase-list-card {
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+
+.phrase-list-card-bottom {
+  border-bottom: 0;
 }
 
 .language-details {
@@ -20885,4 +20900,28 @@ a > .dark code {
 
 .mb-n3 {
   margin-bottom: -1rem !important;
+}
+
+.dropdown-label:hover {
+  background-color: inherit;
+}
+
+.dropdown-logout:hover {
+  cursor: pointer;
+}
+
+.role-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1em;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 0;
+  margin-top: 1em;
+}
+
+.badge-primary {
+  background-color: #563d7c;
 }

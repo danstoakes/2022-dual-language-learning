@@ -172,6 +172,7 @@ class RecordingController extends Controller
             $recording = new Recording;
         }
 
+        $recording->file_name = $languageSlug . '-' . $phrase->generateSlug() . ".mp3";
         $recording->path = Storage::url($languageSlug . '-' . $phrase->generateSlug() . ".mp3");
         $recording->save();
 
