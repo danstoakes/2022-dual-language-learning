@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLanguageTable extends Migration
+class CreateLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,9 +19,10 @@ class CreateLanguageTable extends Migration
             {
                 $table->id();
                 $table->text("name");
+                $table->text('slug');
+                $table->string('excerpt', 255)->nullable();
                 $table->string('description', 1024);
-                $table->integer("module_count")->default(0);
-                $table->text("logo_path");
+                $table->text('flag_svg');
                 $table->timestamps();
             });
         }

@@ -36,7 +36,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
-    Route::resource('languages', LanguageController::class);
+    Route::resource('languages', LanguageController::class)->except(['create']);
+    Route::get('/languages/variants/{variant_id}', [LanguageController::class, 'showVariant'])->name('variants.show');
+    Route::get('home/languages/add', [HomeController::class, 'addLanguage'])->name('languages.add');
     Route::resource('modules', ModuleController::class)->except(['create']);
     Route::resource('phrases', PhraseController::class);
     Route::resource('recordings', RecordingController::class);

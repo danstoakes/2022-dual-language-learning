@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AvailableLanguage;
+use App\Models\AvailableLanguageVariant;
 use App\Models\Language;
+use App\Models\LanguageCode;
+use App\Models\Region;
+use App\Models\SupportedLanguage;
 use App\Rules\HasSVGTag;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 
 class LanguageController extends Controller
 {
@@ -21,6 +28,12 @@ class LanguageController extends Controller
         $this->middleware('permission:language-delete', ['only' => ['destroy']]);
     }
 
+    // change this to be an AvailableLanguage hub and an AvailableLanguageController
+
+    // i.e. like the old language form, displaying currently available languages
+
+    // then move the add language stuff to the user controller
+
     /**
      * Display a listing of the resource.
      *
@@ -30,16 +43,6 @@ class LanguageController extends Controller
     {
         $data = Language::orderBy('id', 'ASC')->paginate(4);
         return view('languages.index', compact('data'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('languages.create');
     }
 
     public static function generateSlug ($text, string $divider = '-')
@@ -78,22 +81,19 @@ class LanguageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'excerpt' => 'max:255',
-            'description' => 'required|max:1024',
-            'logo_path' => ['required', new HasSVGTag],
+            'language_id' => 'required',
+            'region_id' => 'required|unique:regions_users,region_id'
         ]);
+
+        $user = Auth::user();
+        $region = Region::where('id', $request->region_id)
+            ->get()
+            ->first();
+
+        $user->regions()->save($region);
     
-        $language = new Language;
-        $language->name = $request->input('name');
-        $language->slug = $this->generateSlug($request->name);
-        $language->excerpt = $request->input('excerpt');
-        $language->description = $request->input('description');
-        $language->logo_path = $request->input('logo_path');
-        $language->save();
-    
-        return redirect()->route('languages.index')
-            ->with('success', 'Language created successfully.');
+        return redirect()->route('home')
+            ->with('success', 'Language added successfully.');
     }
 
     /**
@@ -105,9 +105,9 @@ class LanguageController extends Controller
     public function show($id)
     {
         $language = Language::find($id);
-        $modules = $language->modules->toArray();
+        $variants = $language->codes();
  
-        return view('languages.show', compact('language'), compact('modules'));
+    return view('languages.show', compact('language'), compact('variants')/*, compact('modules') */);
     }
 
     /**
@@ -161,5 +161,11 @@ class LanguageController extends Controller
         
         return redirect()->route('languages.index')
             ->with('success', 'Language deleted successfully');
+    }
+
+    public function showVariant ($variant) {
+        error_log($variant);
+
+        return view('variants.show', compact('variant'));
     }
 }

@@ -14,40 +14,132 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
-            'user-list',
-            'user-create',
-            'user-edit',
-            'user-delete',
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
-            'permission-list',
-            'permission-create',
-            'permission-edit',
-            'permission-delete',
-            'language-list',
-            'language-create',
-            'language-edit',
-            'language-delete',
-            'module-list',
-            'module-create',
-            'module-edit',
-            'module-delete',
-            'phrase-list',
-            'phrase-create',
-            'phrase-edit',
-            'phrase-delete',
-            'phrase-manage',
-            'recording-list',
-            'recording-create',
-            'recording-edit',
-            'recording-delete'
+        $permissions = [
+            [
+                "name" => "user-list",
+                "description" => "List a resource."
+            ],
+            [
+                "name" => "user-create",
+                "description" => "Create a resource."
+            ],
+            [
+                "name" => "user-edit",
+                "description" => "Edit a resource."
+            ],
+            [
+                "name" => "user-delete",
+                "description" => "Delete a resource."
+            ],
+            [
+                "name" => "role-list",
+                "description" => "List a resource."
+            ],
+            [
+                "name" => "role-create",
+                "description" => "Create a resource."
+            ],
+            [
+                "name" => "role-edit",
+                "description" => "Edit a resource."
+            ],
+            [
+                "name" => "role-delete",
+                "description" => "Delete a resource."
+            ],
+            [
+                "name" => "permission-list",
+                "description" => "List a resource."
+            ],
+            [
+                "name" => "permission-create",
+                "description" => "Create a resource."
+            ],
+            [
+                "name" => "permission-edit",
+                "description" => "Edit a resource."
+            ],
+            [
+                "name" => "permission-delete",
+                "description" => "Delete a resource."
+            ],
+            [
+                "name" => "language-list",
+                "description" => "List a resource."
+            ],
+            [
+                "name" => "language-create",
+                "description" => "Create a resource."
+            ],
+            [
+                "name" => "language-edit",
+                "description" => "Edit a resource."
+            ],
+            [
+                "name" => "language-delete",
+                "description" => "Delete a resource."
+            ],
+            [
+                "name" => "module-list",
+                "description" => "List a resource."
+            ],
+            [
+                "name" => "module-create",
+                "description" => "Create a resource."
+            ],
+            [
+                "name" => "module-edit",
+                "description" => "Edit a resource."
+            ],
+            [
+                "name" => "module-delete",
+                "description" => "Delete a resource."
+            ],
+            [
+                "name" => "phrase-list",
+                "description" => "List a resource."
+            ],
+            [
+                "name" => "phrase-create",
+                "description" => "Create a resource."
+            ],
+            [
+                "name" => "phrase-edit",
+                "description" => "Edit a resource."
+            ],
+            [
+                "name" => "phrase-delete",
+                "description" => "Delete a resource."
+            ],
+            [
+                "name" => "phrase-manage",
+                "description" => "Manage a resource."
+            ],
+            [
+                "name" => "recording-list",
+                "description" => "List a resource."
+            ],
+            [
+                "name" => "recording-create",
+                "description" => "Create a resource."
+            ],
+            [
+                "name" => "recording-edit",
+                "description" => "Edit a resource."
+            ],
+            [
+                "name" => "recording-delete",
+                "description" => "Delete a resource."
+            ]
         ];
 
-        foreach ($data as $permission) {
-            Permission::create(['name' => $permission]);
+        foreach ($permissions as $permission) {
+            Permission::create(
+                [
+                    "name" => $permission["name"],
+                    "description" => $permission["description"]
+                ]
+            );
         }
     }
 }

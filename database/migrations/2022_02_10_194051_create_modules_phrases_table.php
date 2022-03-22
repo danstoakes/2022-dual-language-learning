@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModulePhraseTable extends Migration
+class CreateModulesPhrasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateModulePhraseTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('module_phrase')) {
-            Schema::create('module_phrase', function (Blueprint $table) {
+        if (!Schema::hasTable('modules_phrases')) {
+            Schema::create('modules_phrases', function (Blueprint $table) {
                 $table->unsignedBigInteger('module_id');
                 $table->unsignedBigInteger('phrase_id');
 
@@ -31,6 +31,6 @@ class CreateModulePhraseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module_phrase');
+        Schema::dropIfExists('modules_phrases');
     }
 }

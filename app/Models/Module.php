@@ -14,7 +14,7 @@ class Module extends Model
 {
     use HasFactory;
 
-    protected $table = "modules";
+    protected $table = "module";
 
     /**
      * The attributes that are mass assignable.

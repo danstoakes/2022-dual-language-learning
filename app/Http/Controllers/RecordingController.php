@@ -29,12 +29,9 @@ class RecordingController extends Controller
         $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:language-delete', ['only' => ['destroy']]);
 
-        // https://cloud.google.com/text-to-speech/docs/voices
-        // https://cloud.google.com/text-to-speech/docs/reference/rpc/google.cloud.texttospeech.v1
-        
-        putenv('GOOGLE_APPLICATION_CREDENTIALS=/Users/danstoakes/Projects/dual-language-learning-700e1339570b.json');
-
-        $this->textToSpeechClient = new TextToSpeechClient();
+        $this->textToSpeechClient = new TextToSpeechClient([
+            'credentials' => '/Users/danstoakes/Projects/dual-language-learning-700e1339570b.json'
+        ]);
     }
 
     /**
@@ -44,7 +41,7 @@ class RecordingController extends Controller
      */
     public function index()
     {
-        $limit = 16;
+        $limit = 18;
         $recordings = Recording::orderBy('id', 'ASC')->paginate($limit);
         return view('recordings.index', compact('recordings', 'limit'));
     }
@@ -113,7 +110,7 @@ class RecordingController extends Controller
      * @param  \App\Models\Recording  $recording
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recording $recording)
+    public function destroy (Recording $recording)
     {
         Storage::delete($recording->path);
 
@@ -143,7 +140,7 @@ class RecordingController extends Controller
 
     public function generate(Phrase $phrase)
     {
-        $languageSlug = $phrase->getLanguageSlug();
+        /* $languageSlug = $phrase->getLanguageSlug();
 
         $input = new SynthesisInput();
         $input->setText($phrase->phrase);
@@ -180,6 +177,47 @@ class RecordingController extends Controller
         $phrase->save();
 
         return redirect()->back()
-            ->with('success', 'Recording generated successfully!');
+            ->with('success', 'Recording generated successfully!'); */
+
+        $this->getVoices();
+    }
+
+    public function getLanguages ()
+    {
+
+    }
+
+    public function getVoices () 
+    {
+        echo "<pre>";
+        // perform list voices request
+
+        $response = $this->textToSpeechClient->listVoices([
+            'languageCode' => 'sv_SE'
+        ]);
+        $voices = $response->getVoices();
+
+        foreach ($voices as $voice) {
+            // display the voice's name. example: tpc-vocoded
+            printf('Name: %s' . PHP_EOL, $voice->getName());
+
+            // display the supported language codes for this voice. example: 'en-US'
+            foreach ($voice->getLanguageCodes() as $languageCode) {
+                printf('Supported language: %s' . PHP_EOL, $languageCode);
+            }
+
+            // SSML voice gender values from TextToSpeech\V1\SsmlVoiceGender
+            $ssmlVoiceGender = ['SSML_VOICE_GENDER_UNSPECIFIED', 'MALE', 'FEMALE',
+            'NEUTRAL'];
+
+            // display the SSML voice gender
+            $gender = $voice->getSsmlGender();
+            printf('SSML voice gender: %s' . PHP_EOL, $ssmlVoiceGender[$gender]);
+
+            // display the natural hertz rate for this voice
+            printf('Natural Sample Rate Hertz: %d' . PHP_EOL,
+            $voice->getNaturalSampleRateHertz());
+        }
+        echo "</pre>";
     }
 }

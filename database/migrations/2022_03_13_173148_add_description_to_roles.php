@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSlugToLanguages extends Migration
+class AddDescriptionToRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddSlugToLanguages extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('languages')) {
-            Schema::table('languages', function (Blueprint $table) {
-                $table->text('slug')->after('name')->nullable();
+        if (Schema::hasTable('roles')) {
+            Schema::table('roles', function (Blueprint $table) {
+                $table->text('description')->after('name');
             });
         }
     }
@@ -27,10 +27,10 @@ class AddSlugToLanguages extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('languages', 'slug')) {
-            Schema::table('languages', function (Blueprint $table)
+        if (Schema::hasColumn('roles', 'description')) {
+            Schema::table('roles', function (Blueprint $table)
             {
-                $table->dropColumn('slug');
+                $table->dropColumn('description');
             });
         }
     }
