@@ -55,7 +55,7 @@ class PhraseController extends Controller
             'language_id' => 'required',
             'phrase' => 'required'
         ]);
-    
+
         if (!$request->batch_id)
             $request->merge(["batch_id" => Str::random(10)]);
             
@@ -65,7 +65,10 @@ class PhraseController extends Controller
             return redirect()->route('phrases.index')
                 ->with('success', 'Phrase added successfully.');
 
-        return redirect()->back()->with('error', 'There was a problem adding the phrase.');
+        return redirect()
+            ->back()
+            ->with('error', 'There was a problem adding the phrase.')
+            ->withInput($request->all());
     }
 
     /**

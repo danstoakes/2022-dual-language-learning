@@ -75,7 +75,7 @@ class ModuleController extends Controller
     public function show($id)
     {
         $module = Module::find($id);
-        $phrases = $module->phrases()->paginate(10);
+        $phrases = $module->phrases()->where('language_id', $module->language_id)->paginate(10);
 
         return view('modules.show', compact('module'), compact('phrases'));
     }

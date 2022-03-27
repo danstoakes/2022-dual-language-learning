@@ -28,7 +28,7 @@ class Phrase extends Model
 
     public function modules ()
     {
-        return $this->belongsToMany(Module::class, 'module_phrase');
+        return $this->belongsToMany(Module::class, 'modules_phrases');
     }
 
     public function relatedPhrases ()
@@ -38,17 +38,22 @@ class Phrase extends Model
 
     public function getLogoSVG ()
     {
-        $language = Language::find($this->language_id);
+        $language = $this->language();
 
         if (isset($language))
-            return $language->logo_path;
+            return $language->flag_svg;
 
         return ""; // some back up svg
     }
 
+    public function language ()
+    {
+        return Language::find($this->language_id);
+    }
+
     public function getLanguageName ()
     {
-        $language = Language::find($this->language_id);
+        $language = $this->language();
 
         if (isset($language))
             return $language->name;
@@ -58,7 +63,7 @@ class Phrase extends Model
 
     public function getLanguageSlug ()
     {
-        $language = Language::find($this->language_id);
+        $language = $this->language();
 
         if (isset($language))
             return $language->slug;
@@ -100,17 +105,25 @@ class Phrase extends Model
 
     public function getLanguageFlag ()
     {
-        $language = Language::find($this->language_id);
-
+        $language = $this->language();
+        
         if (isset($language))
-            return $language->logo_path;
+            return $language->flag_svg;
 
         return "N/A";
     }
 
-    public function recording ()
+    public function hasRecordings ()
     {
-        return $this->belongsTo(Recording::class)->first();
+        return $this->recordings()->first() !== null;
+    }
+
+    public function recordings ($languageVoice = null)
+    {
+        if ($languageVoice)
+            return $this->hasMany(Recording::class)->where("voice_name", $languageVoice)->first();
+
+        return $this->hasMany(Recording::class)->get();
     }
 
     public function getBatchCount ()

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRegionsUsersTable extends Migration
+class CreateUsersPhrasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateRegionsUsersTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('regions_users')) {
-            Schema::create('regions_users', function (Blueprint $table) {
-                $table->unsignedBigInteger('region_id');
+        if (!Schema::hasTable('users_phrases')) {
+            Schema::create('users_phrases', function (Blueprint $table) {
                 $table->unsignedBigInteger('user_id');
+                $table->unsignedBigInteger('phrase_id');
+                $table->integer('correct_count')->default(0);
+                $table->integer('incorrect_count')->default(0);
 
-                $table->foreign('region_id')->references('id')->on('regions')->onDelete("cascade");
                 $table->foreign('user_id')->references('id')->on('users')->onDelete("cascade");
+                $table->foreign('phrase_id')->references('id')->on('phrases')->onDelete("cascade");
             });
         }
     }
@@ -31,6 +33,6 @@ class CreateRegionsUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('regions_users');
+        Schema::dropIfExists('users_phrases');
     }
 }

@@ -14,8 +14,6 @@ class Module extends Model
 {
     use HasFactory;
 
-    protected $table = "module";
-
     /**
      * The attributes that are mass assignable.
      *
@@ -30,7 +28,7 @@ class Module extends Model
 
     public function phrases ()
     {
-        return $this->belongsToMany(Phrase::class, 'module_phrase');
+        return $this->belongsToMany(Phrase::class, 'modules_phrases');
     }
 
     public function hasBatch ($batchId)

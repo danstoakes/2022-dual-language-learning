@@ -82,7 +82,7 @@ class LanguageController extends Controller
     {
         $this->validate($request, [
             'language_id' => 'required',
-            'region_id' => 'required|unique:regions_users,region_id'
+            'region_id' => 'required'
         ]);
 
         $user = Auth::user();
@@ -105,9 +105,12 @@ class LanguageController extends Controller
     public function show($id)
     {
         $language = Language::find($id);
-        $variants = $language->codes();
  
-    return view('languages.show', compact('language'), compact('variants')/*, compact('modules') */);
+        return view('languages.show', [
+            "language" => $language,
+            "variants" => $language->codes(),
+            "modules" => $language->modules()->get()
+        ]);
     }
 
     /**

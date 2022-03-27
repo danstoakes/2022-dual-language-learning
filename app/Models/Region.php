@@ -9,5 +9,19 @@ class Region extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        "voice"
+    ];
+
     public $timestamps = false;
+
+    public function language ()
+    {
+        return Language::find($this->language_id);
+    }
 }

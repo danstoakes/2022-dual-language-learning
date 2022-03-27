@@ -8,11 +8,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Languages</p>
-                    @can('language-list')
-                        <span>
-                            <a class="btn btn-primary" href="{{ route('languages.index') }}">Back</a>
-                        </span>
-                    @endcan
+                    <span>
+                        <a class="btn btn-primary" href="{{ route('portal') }}">Back</a>
+                    </span>
                 </div>
                 @include('languages.list')
             </div>

@@ -37,15 +37,19 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('languages', LanguageController::class)->except(['create']);
-    Route::get('/languages/variants/{variant_id}', [LanguageController::class, 'showVariant'])->name('variants.show');
-    Route::get('home/languages/add', [HomeController::class, 'addLanguage'])->name('languages.add');
     Route::resource('modules', ModuleController::class)->except(['create']);
     Route::resource('phrases', PhraseController::class);
     Route::resource('recordings', RecordingController::class);
-    Route::get('/recordings/generate/{phrase}', [RecordingController::class, 'generate'])->name('recordings.generate');
+
+    Route::get('/languages/variants/{variant_id}', [LanguageController::class, 'showVariant'])->name('variants.show');
+    Route::get('home/languages/manage/{language}/region/{variant}', [HomeController::class, 'manageLanguage'])->name('languages.manage');
+    Route::get('home/languages/add', [HomeController::class, 'addLanguage'])->name('languages.add');
     Route::get('/test', [TestController::class, 'index'])->name('test');
     Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
     Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');
     Route::get('/modules/manage-module-phrases/{module_id}', [ModuleController::class, 'managePhrases'])->name('modules.managePhrases');
+
+    Route::patch('home/languages/updateVoice/{variant}', [HomeController::class, 'updateVoice'])->name('languages.updateVoice');
+    Route::post('/recordings/generate/{phrase}', [RecordingController::class, 'generate'])->name('recordings.generate');
     Route::post('/modules/{module}/update-phrases', [ModuleController::class, 'updatePhrases'])->name('modules.updatePhrases');
 });

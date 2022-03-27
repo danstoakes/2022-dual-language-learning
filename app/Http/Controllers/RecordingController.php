@@ -2,38 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Language;
 use App\Models\Phrase;
 use App\Models\Recording;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-use Google\Cloud\TextToSpeech\V1\AudioConfig;
-use Google\Cloud\TextToSpeech\V1\AudioEncoding;
-use Google\Cloud\TextToSpeech\V1\SynthesisInput;
-use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
-use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
-
-class RecordingController extends Controller
+class RecordingController extends TextToSpeechController
 {
-    private $textToSpeechClient;
-    
-    /**
-     * Create a new instance of the class
-     *
-     * @return void
-     */
-    function __construct()
-    {
-        $this->middleware('permission:language-list|language-create|language-edit|language-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:language-create', ['only' => ['create','store']]);
-        $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:language-delete', ['only' => ['destroy']]);
-
-        $this->textToSpeechClient = new TextToSpeechClient([
-            'credentials' => '/Users/danstoakes/Projects/dual-language-learning-700e1339570b.json'
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +32,21 @@ class RecordingController extends Controller
         $data = Phrase::orderBy("batch_id", "ASC")
             ->orderBy("language_id", "DESC")->paginate(20);
 
-        return view("recordings.create", compact("data"));
+        $phraseVoices = [];
+        foreach ($data as $phraseKey => $phrase) {
+            $language = Language::find($phrase->language_id);
+            $codes = $language->codes();
+
+            $voices = [];
+            foreach ($codes as $key => $code)
+                $voices = array_unique(array_merge($voices, $this->listVoices($code)), SORT_REGULAR);
+
+            $phraseVoices[$phrase->id] = [
+                "voices" => $voices
+            ];
+        }
+
+        return view("recordings.create", compact("data"), compact("phraseVoices"));
     }
 
     /**
@@ -113,11 +103,6 @@ class RecordingController extends Controller
     public function destroy (Recording $recording)
     {
         Storage::delete($recording->path);
-
-        $phrase = $recording->phrase();
-        $phrase->recording_id = null;
-        $phrase->save();
-
         $recording->delete();
         
         return redirect()->route("recordings.create")
@@ -138,48 +123,39 @@ class RecordingController extends Controller
         $voice->setSSMLGender(0);
     }
 
-    public function generate(Phrase $phrase)
+    public function generate(Request $request, Phrase $phrase)
     {
-        /* $languageSlug = $phrase->getLanguageSlug();
+        $this->validate($request, [
+            'phrase' => 'language_voice'
+        ]);
 
-        $input = new SynthesisInput();
-        $input->setText($phrase->phrase);
+        $languageCodeComponents = explode('-', $request->language_voice);
 
-        $voice = new VoiceSelectionParams();
-        if ($languageSlug == "swedish") 
-        {
-            $this->configureSwedish($voice);
-        } else if ($languageSlug == "german")
-        {
-            $this->configureGerman($voice);
-        }
+        $audio = $this->performTextToSpeech($phrase->phrase, [
+            "languageCode" => $languageCodeComponents[0] . '-' . $languageCodeComponents[1],
+            "voiceName" => $request->language_voice
+        ]);
 
-        $audioConfig = new AudioConfig();
-        $audioConfig->setAudioEncoding(AudioEncoding::MP3);
+        $fileName = $request->language_voice . '-' . $phrase->generateSlug() . ".mp3";
 
-        $response = $this->textToSpeechClient->synthesizeSpeech($input, $voice, $audioConfig);
+        Storage::put($fileName, $audio);
 
-        Storage::put($languageSlug . '-' . $phrase->generateSlug() . ".mp3", $response->getAudioContent());
-
-        $recording = $phrase->recording();
+        $recording = $phrase->recordings($request->language_voice);
         if ($recording) {
-            if ($recording->path !== Storage::url($languageSlug . '-' . $phrase->generateSlug() . ".mp3"))
+            if ($recording->path !== Storage::url($fileName))
                 Storage::delete($recording->path);
         } else {
             $recording = new Recording;
         }
 
-        $recording->file_name = $languageSlug . '-' . $phrase->generateSlug() . ".mp3";
-        $recording->path = Storage::url($languageSlug . '-' . $phrase->generateSlug() . ".mp3");
+        $recording->phrase_id = $phrase->id;
+        $recording->file_name = $fileName;
+        $recording->path = Storage::url($fileName);
+        $recording->voice_name = $request->language_voice;
         $recording->save();
 
-        $phrase->recording_id = $recording->id;
-        $phrase->save();
-
         return redirect()->back()
-            ->with('success', 'Recording generated successfully!'); */
-
-        $this->getVoices();
+            ->with('success', 'Recording generated successfully!');
     }
 
     public function getLanguages ()

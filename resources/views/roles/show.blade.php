@@ -43,13 +43,15 @@
                             </a>
                         </h4>
                     </div>
-                    <div class="lead">
-                        @if(!empty($rolePermissions))
+                    @if(isset($rolePermissions) && count($rolePermissions) > 0)
+                        <div class="lead">
                             @foreach($rolePermissions as $permission)
                                 <label class="badge badge-success btn-primary">{{ $permission->name }}</label>
                             @endforeach
-                        @endif
-                    </div>
+                        </div>
+                    @else
+                        <p class="mb-0">No permissions set.</p>
+                    @endif
                 </div>
             </div>
         </div>

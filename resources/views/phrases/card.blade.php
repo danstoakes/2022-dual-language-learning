@@ -1,4 +1,4 @@
-<div class="card flex flex-row align-items-center language-list-card phrase-list-card {{ isset($batchCount) && $batchCount == $phrase->getBatchCount() - 1 ? 'phrase-list-card-bottom' : '' }}">
+<div class="card flex flex-row align-items-center language-list-card phrase-list-card {{ (isset($batchCount) && $batchCount == $phrase->getBatchCount() - 1) || isset($lastCard) && $lastCard ? 'phrase-list-card-bottom' : '' }}">
     <span class="card-img-top rounded phrase-language-logo">{!! $phrase->getLogoSVG() !!}</span>
     <div class="card-body language-details d-flex justify-content-between">
         <p class="card-text mt-auto mb-auto mr-1">{{ $phrase->phrase }}</p>
@@ -8,12 +8,10 @@
 
         @if (isset($showRecordingButton) && $showRecordingButton)
             <div class="d-flex">
-                @if (!$phrase->recording())
-                    <a class="btn btn-primary" href="{{ route('recordings.generate', $phrase) }}">Generate</a>
-                @endif
+                <a class="btn btn-primary" href="{{ route('recordings.generate', $phrase) }}">{{ $phrase->recordings() ? 'Update' : 'Generate' }}</a>
                 @can('recording-delete')
-                    @if ($phrase->recording())
-                        <form method="POST" action="{{ route('recordings.destroy', $phrase->recording()) }}" class="ms-2">
+                    @if ($phrase->recordings())
+                        <form method="POST" action="{{ route('recordings.destroy', $phrase->recordings()) }}" class="ms-2">
                             @csrf
                             @method('DELETE')
                             <input class="btn btn-outline-primary" type="submit" value="Delete" />

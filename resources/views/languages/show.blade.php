@@ -26,21 +26,6 @@
                             <h4 class="card-title language-title language-title-large">{{ $language->name }} {!! $language->flag_svg !!}</h4>
                             <p class="card-text">{{ $language->description }}</p>
                         </div>
-                        {{--<div class="mt-3">
-                            <h5 class="card-title">Modules ({{ count($modules) }})</h5>
-                            @if (count($modules) > 0)
-                                @foreach ($modules as $module)
-                                    <a href="{{ route('modules.show', $module['id']) }}">{{ $module["name"] }}</a>                            
-                                @endforeach
-                            @else
-                                <p class="text-icon-inline card-text">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                    </svg>
-                                    There are no modules to display.
-                                </p>
-                            @endif
-                        </div>--}}
                         <div class="mt-3">
                             <h5 class="card-title">Variants ({{ count($variants) }})</h5>
                             @if (count($variants) > 0)
@@ -62,9 +47,24 @@
                                 </p>
                             @endif
                         </div>
+                        <div class="mt-3">
+                            <h5 class="card-title">Modules ({{ count($modules) }})</h5>
+                            @if (count($modules) > 0)
+                                @foreach ($modules as $module)
+                                    <a href="{{ route('modules.show', $module['id']) }}">{{ $module["name"] }}</a>                            
+                                @endforeach
+                            @else
+                                <p class="text-icon-inline card-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                    There are no modules to display.
+                                </p>
+                            @endif
+                        </div>
                     </div>
                 </div>
-                {{-- @can('module-create', 'language-delete')
+                @can('module-create', 'language-delete')
                     <div class="card-footer d-flex justify-content-between">
                         @can('module-create')
                             <span>
@@ -79,7 +79,7 @@
                             </span>
                         @endcan
                     </div>
-                @endcan --}}
+                @endcan
             </div>
         </div>
     </div>

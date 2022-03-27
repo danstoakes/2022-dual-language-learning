@@ -34,14 +34,16 @@
                     <div class="card-body">
                         @foreach ($languages as $key => $language)
                             <div class="{{ $key != count($languages) - 1 ? 'mb-3' : '' }}">
-                                <div class="card flex flex-row align-items-center language-list-card">
-                                    <span class="card-img-top rounded language-logo d-none d-lg-block">{!! $language->flag_svg !!}</span>
-                                    <div class="card-body language-details">
-                                        <span class="badge badge-primary role-badge">{{ $language->code }}</span>
-                                        <h4 class="card-title language-title language-title-large">{{ $language->name }} <span class="d-lg-none">{!! $language->flag_svg !!}</span></h4>
-                                        <p class="card-text">{{ $language->excerpt }}</p>
+                                <a href="{{ route('languages.manage', [$language->id, $language->variant_id]) }}" class="text-decoration-none text-black">
+                                    <div class="card flex flex-row align-items-center language-list-card">
+                                        <span class="card-img-top rounded language-logo d-none d-lg-block">{!! $language->flag_svg !!}</span>
+                                        <div class="card-body language-details">
+                                            <span class="badge badge-primary role-badge">{{ $language->code }}</span>
+                                            <h4 class="card-title language-title language-title-large">{{ $language->name }} <span class="d-lg-none">{!! $language->flag_svg !!}</span></h4>
+                                            <p class="card-text">{{ $language->excerpt }}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
                     </div>

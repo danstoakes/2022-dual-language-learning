@@ -1,6 +1,6 @@
 @if (isset($data) && count($data) > 0)
     <div class="card-body">
-        <div class="row mb-3">
+        <div class="row {{ $data->appends($_GET)->links() == null ? 'mb-3' : '' }}">
             @foreach($data as $key => $phrase)
                 @php
                     if (!isset($batchCount) || isset($batchId) && $batchId != $phrase->batch_id)

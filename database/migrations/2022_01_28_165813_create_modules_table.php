@@ -22,7 +22,6 @@ class CreateModulesTable extends Migration
                 $table->text('name');
                 $table->string('description', 1024);
                 $table->text('icon_svg');
-                $table->boolean('completed')->default(0);
                 $table->timestamps();
             });
         }

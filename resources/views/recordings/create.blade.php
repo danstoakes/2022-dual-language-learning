@@ -14,7 +14,7 @@
                         </span>
                     @endcan
                 </div>
-                @include('phrases.list', ['showRecordingButton' => true])
+                @include('phrases.grid')
             </div>
         </div>
     </div>

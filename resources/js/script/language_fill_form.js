@@ -14,12 +14,18 @@ window.addEventListener("DOMContentLoaded", function () {
             codesSelect.disabled = true;
 
             let excerptView = document.getElementById("language_select_excerpt");
-            excerptView.value = "";
-            excerptView.disabled = true;
+
+            if (excerptView !== null) {
+                excerptView.value = "";
+                excerptView.disabled = true;
+            }
 
             let descriptionView = document.getElementById("language_select_description");
-            descriptionView.innerHTML = "";
-            descriptionView.disabled = true;
+
+            if (descriptionView !== null) {
+                descriptionView.innerHTML = "";
+                descriptionView.disabled = true;
+            }
 
             codesSelect.innerHTML = "";
 
@@ -36,8 +42,11 @@ window.addEventListener("DOMContentLoaded", function () {
                     codesSelect.add(new Option(languageCode, languageCodeArrayKeys[i]));
                 }
 
-                excerptView.value = excerpt;
-                descriptionView.innerHTML = description;
+                if (excerptView !== null)
+                    excerptView.value = excerpt;
+                
+                if (descriptionView !== null)
+                    descriptionView.innerHTML = description;
             }
         });
     }
