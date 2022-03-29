@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AvailableLanguage;
-use App\Models\AvailableLanguageVariant;
 use App\Models\Language;
-use App\Models\LanguageCode;
 use App\Models\Region;
-use App\Models\SupportedLanguage;
 use App\Rules\HasSVGTag;
 use Illuminate\Http\Request;
 
@@ -164,11 +160,5 @@ class LanguageController extends Controller
         
         return redirect()->route('languages.index')
             ->with('success', 'Language deleted successfully');
-    }
-
-    public function showVariant ($variant) {
-        error_log($variant);
-
-        return view('variants.show', compact('variant'));
     }
 }

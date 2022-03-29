@@ -1,13 +1,13 @@
-@extends('layouts.app')
-@section('title', 'Home')
-@section('content')
+@extends("layouts.app")
+@section("title", "Home")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Dashboard') }}
+                    {{ __("Dashboard") }}
                 </div>
                 <div class="card-body">
                 </div>

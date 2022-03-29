@@ -1,16 +1,16 @@
-@extends('layouts.app')
-@section('title', 'Create User')
-@section('content')
+@extends("layouts.app")
+@section("title", "Create Users")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="m-0">Create User</p>
-                    @can('user-list')
+                    <p class="m-0">{{ __("Create User") }}</p>
+                    @can("user-list")
                         <span>
-                            <a class="btn btn-primary" href="{{ route('users.index') }}">Back</a>
+                            <a class="btn btn-primary" href="{{ route('users.index') }}">{{ __("Back") }}</a>
                         </span>
                     @endcan
                 </div>

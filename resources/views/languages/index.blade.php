@@ -1,6 +1,6 @@
-@extends('layouts.app')
-@section('title', 'Language Hub')
-@section('content')
+@extends("layouts.app")
+@section("title", "Language Hub")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")

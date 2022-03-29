@@ -1,6 +1,6 @@
-@if (\Session::has('success'))
+@if (\Session::has("success"))
     <div class="alert alert-success d-flex justify-content-between">
-        <p>{{ \Session::get('success') }}</p>
+        <p>{{ \Session::get("success") }}</p>
         <span class="alert-close" id="alert_popup_close">&times;</span>
     </div>
 @else

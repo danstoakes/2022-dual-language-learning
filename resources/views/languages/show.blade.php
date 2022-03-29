@@ -1,6 +1,6 @@
-@extends('layouts.app')
-@section('title', $language->name)
-@section('content')
+@extends("layouts.app")
+@section("title", $language->name)
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
@@ -8,12 +8,12 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Language</p>
-                    @can('language-edit')
+                    @can("language-edit")
                         <span>
                             <a class="btn btn-primary" href="{{ route('languages.edit', $language->id) }}">Edit</a>
                         </span>
                     @else
-                        @can('language-list')
+                        @can("language-list")
                             <span>
                                 <a class="btn btn-primary" href="{{ route('languages.index') }}">Back</a>
                             </span>
@@ -32,9 +32,7 @@
                                 <div class="lead">
                                     @foreach($variants as $variant)
                                         <label class="badge badge-success btn-primary">
-                                            <a href="{{ route('variants.show', $variant) }}" class="text-white text-decoration-none">
-                                                {{ $variant }}
-                                            </a>
+                                            {{ $variant }}
                                         </label>
                                     @endforeach
                                 </div>
@@ -64,14 +62,14 @@
                         </div>
                     </div>
                 </div>
-                @can('module-create', 'language-delete')
+                @can("module-create", "language-delete")
                     <div class="card-footer d-flex justify-content-between">
-                        @can('module-create')
+                        @can("module-create")
                             <span>
                                 <a class="btn btn-primary" href="{{ route('modules.create', $language->id) }}">Create Module</a>
                             </span>
                             <span>
-                                @can('language-delete')
+                                @can("language-delete")
                                     {!! Form::open(['method' => 'DELETE','route' => ['languages.destroy', $language->id], 'class' => 'ms-2']) !!}
                                     {!! Form::submit('Delete', ['class' => 'btn btn-outline-primary']) !!}
                                     {!! Form::close() !!}

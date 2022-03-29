@@ -1,20 +1,6 @@
-<!--
-    List all phrases, with them being grouped by their batch_id.
-
-    How much does it cost?
-    Wie viel kostet es?
-    Hur mycket kostet det?
-
-    Where are you from?
-    Woher kommen Sie?
-    Var kommer du ifrån?
-
-    Could feature a little flag for the country of origin of each phrase.
--->
-
-@extends('layouts.app')
-@section('title', 'Phrase Hub')
-@section('content')
+@extends("layouts.app")
+@section("title", "Phrase Hub")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
@@ -22,7 +8,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Phrases</p>
-                    @can('phrase-create')
+                    @can("phrase-create")
                         <span>
                             <a class="btn btn-primary" href="{{ route('phrases.create') }}">
                                 <p class="text-icon-inline card-text">
@@ -36,14 +22,14 @@
                             </a>
                         </span>
                     @else
-                        @can('phrase-list')
+                        @can("phrase-list")
                             <span>
-                                <a class="btn btn-primary" href="{{ route('phrases.index') }}">Back</a>
+                                <a class="btn btn-primary" href="{{ route('portal') }}">Back</a>
                             </span>
                         @endcan
                     @endcan
                 </div>
-                @include('phrases.list', ['showRecordingButton' => false])
+                @include("phrases.list", ["showRecordingButton" => false])
             </div>
         </div>
     </div>

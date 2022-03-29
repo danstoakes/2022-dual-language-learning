@@ -24,7 +24,7 @@
                     @else
                         @can('role-list')
                             <span>
-                                <a class="btn btn-primary" href="{{ route('roles.index') }}">Back</a>
+                                <a class="btn btn-primary" href="{{ route('portal') }}">Back</a>
                             </span>
                         @endcan
                     @endcan

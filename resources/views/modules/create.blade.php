@@ -1,6 +1,6 @@
-@extends('layouts.app')
-@section('title', 'Create Module')
-@section('content')
+@extends("layouts.app")
+@section("title", "Create Module")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Create Module</p>
-                    @can('language-list')
+                    @can("language-list")
                         <span>
                             <a class="btn btn-primary" href="{{ route('languages.show', $languageId) }}">Back</a>
                         </span>

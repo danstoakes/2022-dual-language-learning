@@ -41,7 +41,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('phrases', PhraseController::class);
     Route::resource('recordings', RecordingController::class);
 
-    Route::get('/languages/variants/{variant_id}', [LanguageController::class, 'showVariant'])->name('variants.show');
     Route::get('home/languages/manage/{language}/region/{variant}', [HomeController::class, 'manageLanguage'])->name('languages.manage');
     Route::get('home/languages/add', [HomeController::class, 'addLanguage'])->name('languages.add');
     Route::get('/test', [TestController::class, 'index'])->name('test');

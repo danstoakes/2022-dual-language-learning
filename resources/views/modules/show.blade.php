@@ -1,6 +1,6 @@
-@extends('layouts.app')
-@section('title', $module->name)
-@section('content')
+@extends("layouts.app")
+@section("title", $module->name)
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
@@ -8,10 +8,16 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Module</p>
-                    @can('language-list')
+                    @can("module-edit")
                         <span>
                             <a class="btn btn-primary" href="{{ route('modules.edit', $module->id) }}">Edit</a>
                         </span>
+                    @else
+                        @can("module-list")
+                            <span>
+                                <a class="btn btn-primary" href="{{ route('modules.index') }}">Back</a>
+                            </span>
+                        @endcan
                     @endcan
                 </div>
                 <div class="card-body table-responsive">
@@ -29,7 +35,7 @@
                                     @php
                                         $lastCard = $key == count($phrases) - 1;
                                     @endphp
-                                    @include('phrases.card')
+                                    @include("phrases.card")
                                 </a>
                             @endforeach
                         @else
@@ -43,15 +49,15 @@
                     </div>
                     {{ $phrases->appends($_GET)->links() }}
                 </div>
-                @if(Gate::check('phrase-manage') || Gate::check('phrase-delete'))
+                @if(Gate::check("phrase-manage") || Gate::check("phrase-delete"))
                     <div class="card-footer d-flex justify-content-between">
-                        @can('phrase-manage')
+                        @can("phrase-manage")
                             <span>
                                 <a class="btn btn-primary" href="{{ route('modules.managePhrases', $module) }}">Manage Phrases</a>
                             </span>
                         @endcan
                         <span>
-                            @can('phrase-delete')
+                            @can("phrase-delete")
                                 {!! Form::open(['method' => 'DELETE','route' => ['modules.destroy', $module->id], 'class' => 'ms-2']) !!}
                                 {!! Form::submit('Delete', ['class' => 'btn btn-outline-primary']) !!}
                                 {!! Form::close() !!}

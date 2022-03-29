@@ -1,6 +1,6 @@
-@extends('layouts.app')
-@section('title', 'Manage Language')
-@section('content')
+@extends("layouts.app")
+@section("title", "Manage Language")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Manage Language</p>
-                    @can('language-list')
+                    @can("language-list")
                         <span>
                             <a class="btn btn-primary" href="{{ route('home') }}">Back</a>
                         </span>
@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('languages.updateVoice', $variant) }}">
                         @csrf
-                        @method('PATCH')
+                        @method("PATCH")
                         <div class="form-group mb-2 d-flex justify-content-between">
                             <div class="language-dropdown-section ">
                                 <label for="name">Name</label>
@@ -31,8 +31,8 @@
                                         @foreach ($language->voices as $key => $voice)
                                             <option 
                                                 value="{{ $voice['id'] }}"
-                                                {{ $voice['id'] == $language->currentVoice ? 'selected' : '' }}
-                                            >{{ $voice['display_name'] }}</option>
+                                                {{ $voice["id"] == $language->currentVoice ? "selected" : "" }}
+                                            >{{ $voice["display_name"] }}</option>
                                         @endforeach
                                     @endif
                                 </select>

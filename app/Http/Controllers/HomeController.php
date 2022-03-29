@@ -6,7 +6,6 @@ use App\Models\Language;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 
 class HomeController extends TextToSpeechController
 {

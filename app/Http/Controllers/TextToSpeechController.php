@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Phrase;
 use App\Services\GoogleCloud\TextToSpeech;
 
 class TextToSpeechController extends Controller

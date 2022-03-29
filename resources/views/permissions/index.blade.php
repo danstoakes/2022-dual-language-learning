@@ -24,7 +24,7 @@
                     @else
                         @can('permission-list')
                             <span>
-                                <a class="btn btn-primary" href="{{ route('permissions.index') }}">Back</a>
+                                <a class="btn btn-primary" href="{{ route('portal') }}">Back</a>
                             </span>
                         @endcan
                     @endcan

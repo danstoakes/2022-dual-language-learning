@@ -1,6 +1,6 @@
-@extends('layouts.app')
-@section('title', 'Add to Module')
-@section('content')
+@extends("layouts.app")
+@section("title", "Add to Module")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Phrases</p>
-                    @can('language-create')
+                    @can("language-create")
                         <span>
                             <a class="btn btn-primary" href="{{ route('phrases.create') }}">New Phrase</a>
                         </span>
@@ -18,7 +18,7 @@
                     <div class="card-body table-responsive">
                         <form>
                             @csrf
-                            @method("PUT")
+                            @method("PATCH")
                             <table class="table table-hover">
                                 <thead class="thead-dark">
                                     <tr>

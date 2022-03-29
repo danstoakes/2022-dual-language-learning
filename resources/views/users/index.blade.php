@@ -1,6 +1,6 @@
-@extends('layouts.app')
-@section('title', 'User Hub')
-@section('content')
+@extends("layouts.app")
+@section("title", "User Hub")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <p class="m-0">Users</p>
-                    @can('user-create')
+                    @can("user-create")
                         <span>
                             <a class="btn btn-primary" href="{{ route('users.create') }}">
                                 <p class="text-icon-inline card-text">
@@ -22,11 +22,9 @@
                             </a>
                         </span>
                     @else
-                        @can('user-list')
-                            <span>
-                                <a class="btn btn-primary" href="{{ route('users.index') }}">Back</a>
-                            </span>
-                        @endcan
+                        <span>
+                            <a class="btn btn-primary" href="{{ route('portal') }}">Back</a>
+                        </span>
                     @endcan
                 </div>
                 <div class="card-body">

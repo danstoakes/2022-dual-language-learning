@@ -1,11 +1,11 @@
-@extends('layouts.app')
-@section('title', 'Admin Portal')
-@section('content')
+@extends("layouts.app")
+@section("title", "Admin Portal")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="row mb-4">
-                @can('language-list')
+                @can("language-list")
                     <div>
                         <div class="card">
                             <div class="card-body">
@@ -18,7 +18,7 @@
                 @endcan
             </div>
             <div class="row mb-4">
-                @can('user-list')
+                @can("user-list")
                     <div class="col-sm-6 mb-4 mb-sm-0">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 @endcan
-                @can('role-list')
+                @can("role-list")
                     <div class="col-sm-6">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -46,7 +46,7 @@
                 @endcan
             </div>
             <div class="row mb-4">
-                @can('permission-list')
+                @can("permission-list")
                     <div class="col-sm-6 mb-4 mb-sm-0">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 @endcan
-                @can('language-list')
+                @can("phrase-list")
                     <div class="col-sm-6">
                         <div class="card h-100">
                             <div class="card-body d-flex flex-column">
@@ -74,7 +74,7 @@
                 @endcan
             </div>
             <div class="row">
-                @can('language-list')
+                @can("recording-list")
                     <div class="">
                         <div class="card">
                             <div class="card-body">
