@@ -1,19 +1,19 @@
-@extends('layouts.app')
-@section('title', 'Add Phrase')
-@section('content')
+@extends("layouts.app")
+@section("title", "Add Phrase")
+@section("content")
 <div class="container">
     <div class="row justify-content-center">
         @include("partials.popup")
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="m-0">Add Phrase</p>
-                    @can('language-list')
-                        <span>
-                            <a class="btn btn-primary" href="{{ route('phrases.index') }}">Back</a>
-                        </span>
-                    @endcan
-                </div>
+                @include("partials.card-header", [
+                    "title" => "Add Phrase",
+                    "primaryButton" => [
+                        "condition" => "language-list",
+                        "url" => "phrases.index",
+                        "text" => "Back",
+                    ]
+                ])
                 <div class="card-body">
                     <form method="POST" action="{{ route('phrases.store') }}">
                         @csrf

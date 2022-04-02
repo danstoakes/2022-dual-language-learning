@@ -6,27 +6,25 @@
         @include("partials.popup")
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="m-0">Create Module</p>
-                    @can("language-list")
-                        <span>
-                            <a class="btn btn-primary" href="{{ route('languages.show', $languageId) }}">Back</a>
-                        </span>
-                    @endcan
-                </div>
+                @include("partials.card-header", [
+                    "title" => "Create Module",
+                    "primaryButton" => [
+                        "condition" => "language-list",
+                        "url" => "languages.show",
+                        "data" => $language,
+                        "text" => "Back",
+                    ]
+                ])
                 <div class="card-body">
                     <form method="POST" action="{{ route('modules.store') }}">
                         @csrf
-                        <input class="form-control" type="hidden" name="language_id" value="{{ $languageId }}" required />
-                        <div class="form-group mb-2">
-                            <label for="name">Name</label>
-                            <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" name="description" rows="4" maxlength="1024" oninput="changeCount(event, 'description_characters')" onfocus="changeCount(event, 'description_characters')" required>{{ old("description") }}</textarea>
-                            <small id="description_characters" class="form-text text-muted"></small>
-                        </div>
+                        <input class="form-control" type="hidden" name="language_id" value="{{ $language }}" required />
+                        @include("atoms/form.input-name", [
+                            "hasBottomMargin" => true, "isRequired" => true
+                        ])
+                        @include("atoms/form.input-description", [
+                            "hasBottomMargin" => true, "isRequired" => true, "maxLength" => "1024"
+                        ])
                         <div class="form-group mb-3">
                             <label for="logo">SVG Logo</label>
                             <textarea class="form-control" name="icon_svg" rows="4" placeholder="Optional">{{ old("icon_svg") }}</textarea>

@@ -1,7 +1,7 @@
 @if (isset($recordings) && count($recordings) > 0)
     <div class="card-body mb-n3">
         <div class="row">
-            @foreach ($recordings as $key=>$recording)
+            @foreach ($recordings as $key => $recording)
                 <div class="col-lg-2 col-4 mb-3 mb-lg-3 mb-lg-0 mb-0">
                     <div class="card music-container">
                         <div class="card-body music-container-body">
@@ -30,10 +30,8 @@
         {{ $recordings->appends($_GET)->links() }}
     </div>
 @else
-    <div class="card-body">
-        <div>
-            <h4 class="card-title">No Recordings Available</h4>
-            <p class="card-text">Oops! It looks like there aren't any recordings yet.</p>
-        </div>
-    </div>
+    @include("partials.no-content", [
+        "title" => "No Recordings Available",
+        "text" => "Oops! It looks like there aren't any recordings yet."
+    ])
 @endif

@@ -6,14 +6,14 @@
         @include("partials.popup")
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="m-0">Phrases</p>
-                    @can("language-create")
-                        <span>
-                            <a class="btn btn-primary" href="{{ route('phrases.create') }}">New Phrase</a>
-                        </span>
-                    @endcan
-                </div>
+                @include("partials.card-header", [
+                    "title" => "Phrases",
+                    "primaryButton" => [
+                        "condition" => "language-create",
+                        "url" => "phrases.create",
+                        "text" => "New Phrase",
+                    ]
+                ])
                 @if (isset($data) && count($data) > 0)
                     <div class="card-body table-responsive">
                         <form>
@@ -42,12 +42,10 @@
                         </form>
                     </div>
                 @else
-                    <div class="card-body">
-                        <div>
-                            <h4 class="card-title">No Phrases Available</h4>
-                            <p class="card-text">Oops! It looks like there aren't any phrases yet.</p>
-                        </div>
-                    </div>
+                    @include("partials.no-content", [
+                        "title" => "No Phrases Available",
+                        "text" => "Oops! It looks like there aren't any phrases yet."
+                    ])
                 @endif
             </div>
         </div>

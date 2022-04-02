@@ -37,8 +37,8 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        $data = Language::orderBy('id', 'ASC')->paginate(4);
-        return view('languages.index', compact('data'));
+        $languages = Language::orderBy("id", "ASC")->paginate(4);
+        return view("languages.index", compact("languages"));
     }
 
     public static function generateSlug ($text, string $divider = '-')

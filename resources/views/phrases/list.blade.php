@@ -25,10 +25,8 @@
         {{ $data->appends($_GET)->links() }}
     </div>
 @else
-    <div class="card-body">
-        <div>
-            <h4 class="card-title">No Phrases Available</h4>
-            <p class="card-text">Oops! It looks like there aren't any phrases yet.</p>
-        </div>
-    </div>
+    @include("partials.no-content", [
+        "title" => "No Phrases Available",
+        "text" => "Oops! It looks like there aren't any phrases yet."
+    ])
 @endif

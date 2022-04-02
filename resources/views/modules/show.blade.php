@@ -6,20 +6,21 @@
         @include("partials.popup")
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="m-0">Module</p>
-                    @can("module-edit")
-                        <span>
-                            <a class="btn btn-primary" href="{{ route('modules.edit', $module->id) }}">Edit</a>
-                        </span>
-                    @else
-                        @can("module-list")
-                            <span>
-                                <a class="btn btn-primary" href="{{ route('modules.index') }}">Back</a>
-                            </span>
-                        @endcan
-                    @endcan
-                </div>
+                @include("partials.card-header", [
+                    "title" => "Module",
+                    "primaryButton" => [
+                        "condition" => "module-edit",
+                        "url" => "modules.edit",
+                        "data" => $module,
+                        "text" => "Edit",
+                        "mobileIcon" => "atoms/icon.edit-button-symbol"
+                    ],
+                    "secondaryButton" => [
+                        "condition" => "module-list",
+                        "url" => "modules.index",
+                        "text" => "Back"
+                    ]
+                ])
                 <div class="card-body table-responsive">
                     <div class="d-flex flex-column mb-2">
                         <div>
@@ -40,9 +41,7 @@
                             @endforeach
                         @else
                             <p class="text-icon-inline card-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                </svg>
+                                @include("atoms/icon.caution-symbol")
                                 There are no phrases to display.
                             </p>
                         @endif

@@ -49,4 +49,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Region::class, 'regions_users');
     }
+
+    public function getRole ()
+    {
+        $userRole = "User";
+        if (!empty($this->getRoleNames())) {
+            foreach ($this->getRoleNames() as $role)
+                $userRole = $role;
+        }
+
+        return $userRole;
+    }
 }

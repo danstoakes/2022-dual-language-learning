@@ -26,7 +26,7 @@
                 </form>
             </div>
         </div>
-        @can('recording-delete')
+        @can("recording-delete")
             @if ($phrase->hasRecordings())
                 <div class="card-footer" id="heading-{{ $phrase->id }}">
                     <h5 class="mb-0">

@@ -30,9 +30,11 @@ class ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($languageId)
+    public function create($language)
     {
-        return view('modules.create', ['languageId' => $languageId]);
+        return view("modules.create", [
+            "language" => $language
+        ]);
     }
 
     private function getDefaultIconSVG () 
@@ -49,7 +51,7 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|min:3',
             'description' => 'required|max:1024',
             'icon_svg' => new HasSVGTag,
         ]);

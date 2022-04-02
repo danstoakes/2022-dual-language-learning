@@ -6,26 +6,25 @@
         @include("partials.popup")
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="m-0">Create Permission</p>
-                    @can("permission-list")
-                        <span>
-                            <a class="btn btn-primary" href="{{ route('permissions.index') }}">Back</a>
-                        </span>
-                    @endcan
-                </div>
+                @include("partials.card-header", [
+                    "title" => "Create Permission",
+                    "primaryButton" => [
+                        "condition" => "permission-list",
+                        "url" => "permissions.index",
+                        "text" => "Back",
+                    ]
+                ])
                 <div class="card-body">
                     <form method="POST" action="{{ route('permissions.store') }}">
                         @csrf
-                        <div class="form-group mb-3">
-                            <label for="name">Name</label>
-                            <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />
-                        </div>
+                        @include("atoms/form.input-name", [
+                            "hasBottomMargin" => true, "isRequired" => true
+                        ])
                         <div class="form-group mb-3">
                             <label for="description" class="form-label">Description</label>
                             <input class="form-control" list="datalistOptions" name="description" placeholder="Optional" maxlength="255" value="{{ old('description') }}" oninput="changeCount(event, 'excerpt_characters')" onfocus="changeCount(event, 'excerpt_characters')">
                             <datalist id="datalistOptions">
-                                @if (isset($descriptions))
+                                @if(isset($descriptions))
                                     @foreach ($descriptions as $description)
                                         <option value="{{ $description }}">{{ $description }}</option>
                                     @endforeach
