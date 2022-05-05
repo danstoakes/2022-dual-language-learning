@@ -28,7 +28,7 @@
                                 <p class="card-text">{{ __($language->description) }}</p>
                             </div>
                             <div class="mt-3">
-                                <h5 class="card-title">{{ "Variants " . "(" . count($variants) . ")" }}</h5>
+                                <h5 class="card-title">{{ __("Variants " . "(" . count($variants) . ")") }}</h5>
                                 @if (count($variants) > 0)
                                     <div class="lead">
                                         @foreach($variants as $variant)
@@ -44,37 +44,41 @@
                                     </p>
                                 @endif
                             </div>
-                            <div class="mt-3">
-                                <h5 class="card-title">{{ "Modules " . "(" . count($modules) . ")" }}</h5>
-                                @if (count($modules) > 0)
-                                    @foreach ($modules as $module)
-                                        <a href="{{ route('modules.show', $module['id']) }}">{{ __($module["name"]) }}</a>                            
-                                    @endforeach
-                                @else
-                                    <p class="text-icon-inline card-text">
-                                        @include("atoms/icon.caution-symbol")
-                                        {{ __("There are no modules to display.") }}
-                                    </p>
-                                @endif
-                            </div>
+                            @can("module-list")
+                                <div class="mt-3">
+                                    <h5 class="card-title">{{ __("Modules " . "(" . count($modules) . ")") }}</h5>
+                                    @if (count($modules) > 0)
+                                        @foreach ($modules as $module)
+                                            <a href="{{ route('modules.show', $module['id']) }}">{{ __($module["name"]) }}</a>                            
+                                        @endforeach
+                                    @else
+                                        <p class="text-icon-inline card-text">
+                                            @include("atoms/icon.caution-symbol")
+                                            {{ __("There are no modules to display.") }}
+                                        </p>
+                                    @endif
+                                </div>
+                            @endcan
                         </div>
                     </div>
-                    @can("module-create", "language-delete")
+                    @if(Gate::check("module-create") || Gate::check("language-delete"))
                         <div class="card-footer d-flex justify-content-between">
                             @can("module-create")
                                 <span>
                                     <a class="btn btn-primary" href="{{ route('modules.create', $language->id) }}">{{ __("Create Module") }}</a>
                                 </span>
+                            @endcan
+                            @can("language-delete")
                                 <span>
-                                    @can("language-delete")
-                                        {!! Form::open(['method' => 'DELETE','route' => ['languages.destroy', $language->id], 'class' => 'ms-2']) !!}
-                                        {!! Form::submit('Delete', ['class' => 'btn btn-outline-primary']) !!}
-                                        {!! Form::close() !!}
-                                    @endcan
+                                    <form method="POST" action="{{ route('languages.destroy', $language) }}" class="ms-2">
+                                        @csrf
+                                        @method("DELETE")
+                                        <input class="btn btn-outline-primary" type="submit" value="Delete" />
+                                    </form>
                                 </span>
                             @endcan
                         </div>
-                    @endcan
+                    @endif
                 </div>
             </div>
         </div>

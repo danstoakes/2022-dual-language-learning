@@ -2,7 +2,7 @@
     "form-group",
     "mb-2" => $hasBottomMargin
 ])>
-    <label for="name">Name</label>
+    <label for="name">{{ __("Name") }}</label>
     <input 
         class="form-control" 
         type="text" 

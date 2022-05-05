@@ -17,18 +17,9 @@ class HomeController extends TextToSpeechController
     public function index()
     {
         $user = Auth::user();
-        $variants = $user->regions()->get();
+        $languages = $user->languages()->get();
 
-        $languages = [];
-        foreach ($variants as $variant) {
-            $language = Language::find($variant->language_id);
-            $language->code = $variant->language_code;
-            $language->variant_id = $variant->id;
-
-            array_push($languages, $language);
-        }
-
-        return view('home', compact('languages', 'variants'));
+        return view("home", compact("user", "languages"));
     }
 
     public function addLanguage ()

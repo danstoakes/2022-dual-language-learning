@@ -18,7 +18,7 @@ class TextToSpeechController extends Controller
     // pass these in as attributes in the <select>
     public function setVoice ($languageCode, $name /*, $gender */)
     {
-    $this->textToSpeech->setVoice($languageCode, $name /*, $gender */);
+        $this->textToSpeech->setVoice($languageCode, $name /*, $gender */);
     }
 
     private function getSynthesisInput ()

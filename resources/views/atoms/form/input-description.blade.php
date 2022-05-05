@@ -2,7 +2,7 @@
     "form-group",
     "mb-2" => $hasBottomMargin
 ])>
-    <label for="description">Description</label>
+    <label for="description">{{ __("Description") }}</label>
     <textarea 
         id="language_select_description" 
         class="form-control" 

@@ -5,7 +5,7 @@
                 <div @class([
                     "mb-3" => !$loop->last
                 ])>
-                    <a href="{{ route("languages.show", $language->id) }}" class="text-decoration-none text-black">
+                    <a href="{{ route("languages.show", $language) }}" class="text-decoration-none text-black">
                         <div class="card flex flex-row align-items-center language-list-card">
                             <span class="card-img-top rounded language-logo d-none d-lg-block">{!! $language->flag_svg !!}</span>
                             <div class="card-body language-details">

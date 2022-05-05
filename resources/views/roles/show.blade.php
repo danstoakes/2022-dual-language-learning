@@ -36,9 +36,13 @@
                             <div class="lead">
                                 @foreach($rolePermissions as $permission)
                                     <label class="badge badge-success btn-primary">
-                                        <a href="{{ route('permissions.show', $permission) }}" class="text-white text-decoration-none">
+                                        @can("permission-list")
+                                            <a href="{{ route('permissions.show', $permission) }}" class="text-white text-decoration-none">
+                                                {{ __($permission->name) }}
+                                            </a>
+                                        @else
                                             {{ __($permission->name) }}
-                                        </a>
+                                        @endcan
                                     </label>
                                 @endforeach
                             </div>

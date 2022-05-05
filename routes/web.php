@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('home/languages/manage/{language}/region/{variant}', [HomeController::class, 'manageLanguage'])->name('languages.manage');
     Route::get('home/languages/add', [HomeController::class, 'addLanguage'])->name('languages.add');
+    Route::get('/home/{user}/enrol-language', [UserController::class, 'showEnrolLanguage'])->name("users.enrolLanguage");
     Route::get('/test', [TestController::class, 'index'])->name('test');
     Route::get('/admin-portal', [PortalController::class, 'index'])->name('portal');
     Route::get('/modules/create/{language_id}', [ModuleController::class, 'create'])->name('modules.create');

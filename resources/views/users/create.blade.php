@@ -35,7 +35,7 @@
                             <div class="form-group mb-3">
                                 <label for="role">{{ __("Role") }}</label>
                                 <select name="role" class="form-control form-select form-select-md" required>
-                                    <option>Select a role</option>
+                                    <option value="">Select a role</option>
                                     @if (isset($roles))
                                         @foreach ($roles as $key => $role)
                                             <option value="{{ $role->id }}">{{ __($role->name) }}</option>

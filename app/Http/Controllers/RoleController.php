@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -16,10 +16,11 @@ class RoleController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:role-create', ['only' => ['create','store']]);
-         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware("permission:role-list|role-create|role-edit|role-delete", ["only" => ["index", "store"]]);
+        $this->middleware("permission:role-list", ["only" => ["show"]]);
+        $this->middleware("permission:role-create", ["only" => ["create", "store"]]);
+        $this->middleware("permission:role-edit", ["only" => ["edit", "update"]]);
+        $this->middleware("permission:role-delete", ["only" => ["destroy"]]);
     }
 
     /**
@@ -43,7 +44,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::get();
 
-        return view('roles.create', compact('permissions'));
+        return view("roles.create", compact("permissions"));
     }
 
     /**
@@ -55,9 +56,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'description' => 'required|max:128',
-            'permission' => 'required',
+            "name" => "required|unique:roles,name",
+            "description" => "required|max:128",
+            "permission" => "required"
         ]);
 
         $role = new Role;
@@ -68,8 +69,8 @@ class RoleController extends Controller
         $permissions = $request->permission;
         $role->syncPermissions($permissions);
     
-        return redirect()->route('roles.index')
-            ->with('success', 'Role created successfully.');
+        return redirect()->route("roles.index")
+            ->with("success", "Role created successfully.");
     }
 
     /**
@@ -81,11 +82,11 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        $rolePermissions = Permission::join('role_has_permissions', 'role_has_permissions.permission_id', 'permissions.id')
-            ->where('role_has_permissions.role_id', $id)
+        $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "permissions.id")
+            ->where("role_has_permissions.role_id", $id)
             ->get();
     
-        return view('roles.show', compact('role', 'rolePermissions'));
+        return view("roles.show", compact("role", "rolePermissions"));
     }
 
     /**
@@ -98,12 +99,12 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $permissions = Permission::all();
-        $rolePermissions = DB::table('role_has_permissions')
-            ->where('role_has_permissions.role_id', $id)
-            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+        $rolePermissions = DB::table("role_has_permissions")
+            ->where("role_has_permissions.role_id", $id)
+            ->pluck("role_has_permissions.permission_id", "role_has_permissions.permission_id")
             ->all();
     
-        return view('roles.edit', compact('role', 'permissions', 'rolePermissions'));
+        return view("roles.edit", compact("role", "permissions", "rolePermissions"));
     }
 
     /**
@@ -116,9 +117,9 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|unique:roles,name,'  . $id,
-            'description' => 'required|max:128',
-            'permission' => 'required',
+            "name" => "required|unique:roles,name," . $id,
+            "description" => "required|max:128",
+            "permission" => "required"
         ]);
     
         $role = Role::find($id);
@@ -129,8 +130,8 @@ class RoleController extends Controller
         $permissions = $request->permission;
         $role->syncPermissions($permissions);
     
-        return redirect()->route('roles.show', $role)
-            ->with('success', 'Role updated successfully.');
+        return redirect()->route("roles.show", $role)
+            ->with("success", "Role updated successfully.");
     }
 
     /**
@@ -143,7 +144,7 @@ class RoleController extends Controller
     {
         Role::find($id)->delete();
         
-        return redirect()->route('roles.index')
-            ->with('success', 'Role deleted successfully');
+        return redirect()->route("roles.index")
+            ->with("success", "Role deleted successfully");
     }
 }

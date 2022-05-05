@@ -18,17 +18,12 @@ class LanguageController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:language-list|language-create|language-edit|language-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:language-create', ['only' => ['create','store']]);
-        $this->middleware('permission:language-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:language-delete', ['only' => ['destroy']]);
+        $this->middleware("permission:language-list|language-create|language-edit|language-delete", ["only" => ["index", "store"]]);
+        $this->middleware("permission:language-list", ["only" => ["show"]]);
+        $this->middleware("permission:language-create", ["only" => ["create", "store"]]);
+        $this->middleware("permission:language-edit", ["only" => ["edit", "update"]]);
+        $this->middleware("permission:language-delete", ["only" => ["destroy"]]);
     }
-
-    // change this to be an AvailableLanguage hub and an AvailableLanguageController
-
-    // i.e. like the old language form, displaying currently available languages
-
-    // then move the add language stuff to the user controller
 
     /**
      * Display a listing of the resource.
@@ -38,6 +33,7 @@ class LanguageController extends Controller
     public function index()
     {
         $languages = Language::orderBy("id", "ASC")->paginate(4);
+
         return view("languages.index", compact("languages"));
     }
 
@@ -88,8 +84,8 @@ class LanguageController extends Controller
 
         $user->regions()->save($region);
     
-        return redirect()->route('home')
-            ->with('success', 'Language added successfully.');
+        return redirect()->route("home")
+            ->with("success", "Language added successfully.");
     }
 
     /**
@@ -102,7 +98,7 @@ class LanguageController extends Controller
     {
         $language = Language::find($id);
  
-        return view('languages.show', [
+        return view("languages.show", [
             "language" => $language,
             "variants" => $language->codes(),
             "modules" => $language->modules()->get()
@@ -118,7 +114,8 @@ class LanguageController extends Controller
     public function edit($id)
     {
         $language = Language::find($id);
-        return view('languages.edit', compact('language'));
+
+        return view("languages.edit", compact("language"));
     }
 
     /**
@@ -131,21 +128,21 @@ class LanguageController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'excerpt' => 'max:255',
-            'description' => 'required|max:1024',
-            'logo_path' => ['required', new HasSVGTag],
+            "name" => "required",
+            "excerpt" => "max:255",
+            "description" => "required|max:1024",
+            "logo_path" => ["required", new HasSVGTag],
         ]);
 
         $language = Language::find($id);
-        $language->name = $request->input('name');
-        $language->excerpt = $request->input('excerpt');
-        $language->description = $request->input('description');
-        $language->logo_path = $request->input('logo_path');
+        $language->name = $request->input("name");
+        $language->excerpt = $request->input("excerpt");
+        $language->description = $request->input("description");
+        $language->logo_path = $request->input("logo_path");
         $language->save();
         
-        return redirect()->route('languages.show', $language->id)
-            ->with('success', 'Language updated successfully.');
+        return redirect()->route("languages.show", $language)
+            ->with("success", "Language updated successfully.");
     }
 
     /**
@@ -158,7 +155,7 @@ class LanguageController extends Controller
     {
         Language::find($id)->delete();
         
-        return redirect()->route('languages.index')
-            ->with('success', 'Language deleted successfully');
+        return redirect()->route("languages.index")
+            ->with("success", "Language deleted successfully");
     }
 }
