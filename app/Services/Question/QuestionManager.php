@@ -23,20 +23,18 @@ class QuestionManager
         {
             $batchId = $phrase->batch_id;
 
-            $relatedPhrases = [];
             foreach ($languages as $userLanguage) 
             {
                 $relatedPhrasesCollection = Phrase::where("language_id", $userLanguage->id)->where("batch_id", $batchId)->get();
                 foreach ($relatedPhrasesCollection as $relatedPhrase)
                 {
-                    $relatedPhrases[count($relatedPhrases)] = [
+                    $questions[count($questions)] = [
                         "phrase" => $relatedPhrase->phrase,
                         "language_name" => Language::find($relatedPhrase->language_id)->name,
                         "question" => "Write '" . $relatedPhrase->phrase . "' in English"
                     ];
                 }
             }
-            $questions[count($questions)] = $relatedPhrases;
         }
 
         return $questions;

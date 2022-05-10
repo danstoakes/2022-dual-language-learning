@@ -22,5 +22,7 @@ class QuestionController extends Controller
         $user = Auth::user();
 
         $questions = $this->questionManager->generateQuestions($language, $user, 10);
+
+        return view("questions", compact("questions"));
     }
 }
