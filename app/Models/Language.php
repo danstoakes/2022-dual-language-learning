@@ -40,12 +40,4 @@ class Language extends Model
         
         return $codes;
     }
-
-    /*     public function codes ()
-    {
-        $regions = $this->regions()->get();
-        $codes = $regions->pluck('language_code', 'id')->all();
-        
-        return $codes;
-    } */
 }

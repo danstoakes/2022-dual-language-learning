@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PhraseController;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RecordingController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('modules', ModuleController::class)->except(['create']);
     Route::resource('phrases', PhraseController::class);
     Route::resource('recordings', RecordingController::class);
+
+    Route::resource('questions', QuestionController::class);
+
+    Route::get('questions/quiz/{language_id}', [QuestionController::class, 'startQuiz'])->name('questions.start');
 
     Route::get('home/languages/manage/{language}/region/{variant}', [HomeController::class, 'manageLanguage'])->name('languages.manage');
     Route::get('home/languages/add', [HomeController::class, 'addLanguage'])->name('languages.add');

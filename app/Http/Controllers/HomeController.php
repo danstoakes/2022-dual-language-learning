@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Language;
 use App\Models\Region;
+use App\Services\Question\QuestionManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends TextToSpeechController
 {
+    private $questionManager;
+
+    function __construct ()
+    {
+        $this->questionManager = new QuestionManager();
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -18,8 +26,9 @@ class HomeController extends TextToSpeechController
     {
         $user = Auth::user();
         $languages = $user->languages()->get();
+        $quizLanguage = $user->getRandomLanguage();
 
-        return view("home", compact("user", "languages"));
+        return view("home", compact("user", "languages", "quizLanguage"));
     }
 
     public function addLanguage ()
